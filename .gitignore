@@ -1,1 +1,5 @@
 /.project
+
+*.properties
+frontend/WebApp/build/classes/AwsCredentials.properties
+frontend/WebApp/src/AwsCredentials.properties
