@@ -10,11 +10,22 @@ public interface Resources extends ClientBundle {
 	@Source("css/introduction.css")
 	introduction introduction();
 
+	@Source("css/mainpage.css")
+	mainpage mainpage();
+
 	public interface introduction extends CssResource {
 		String header();
 
 		String main();
-		
+
 		String boxes();
+	}
+	
+	public interface mainpage extends CssResource {
+		String header();
+
+		String main();
+		
+		String TODO();
 	}
 }

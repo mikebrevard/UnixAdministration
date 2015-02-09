@@ -13,6 +13,8 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.webapp.client.userinterface.ResourceWidget;
+import com.webapp.client.userinterface.mainpage.MainPanel;
+import com.webapp.client.userinterface.utilities.Toolkit;
 
 public class IntroductionPanel extends ResourceWidget {
 
@@ -37,6 +39,8 @@ public class IntroductionPanel extends ResourceWidget {
 				Window.alert("Information\nServer: " + server.getText()
 						+ "\nLogin: " + login.getText()
 						+ "\t\nPassword: ...nope...");
+				Toolkit.loadWidget(new MainPanel(server.getText(), login
+						.getText()));
 			}
 		});
 	}

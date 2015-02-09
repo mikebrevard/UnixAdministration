@@ -6,5 +6,6 @@ import com.webapp.client.userinterface.resources.Resources;
 public class ResourceWidget extends Composite {
 	static {
 		Resources.INSTANCE.introduction().ensureInjected();
+		Resources.INSTANCE.mainpage().ensureInjected();
 	}
 }
