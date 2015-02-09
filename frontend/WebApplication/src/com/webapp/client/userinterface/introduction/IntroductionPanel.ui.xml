@@ -4,6 +4,41 @@
 	<ui:with field='css'
 		type='com.webapp.client.userinterface.resources.Resources' />
 	<g:HTMLPanel>
-		<g:Label styleName="{css.introduction.header}">Hello World</g:Label>
+		<g:VerticalPanel styleName="{css.introduction.main}"
+			ui:field="main">
+			<g:Label styleName="{css.introduction.header}">CS 183 Web Application</g:Label>
+			<g:HTMLPanel>
+				<table>
+					<tr>
+						<td>
+							<g:Label>Server: </g:Label>
+						</td>
+						<td>
+							<g:TextBox styleName="{css.introduction.boxes}"
+								ui:field="server" />
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<g:Label>Login: </g:Label>
+						</td>
+						<td>
+							<g:TextBox styleName="{css.introduction.boxes}"
+								ui:field="login" />
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<g:Label>Password: </g:Label>
+						</td>
+						<td>
+							<g:PasswordTextBox styleName="{css.introduction.boxes}"
+								ui:field="password" />
+						</td>
+					</tr>
+				</table>
+			</g:HTMLPanel>
+			<g:Button ui:field="submit">Continue</g:Button>
+		</g:VerticalPanel>
 	</g:HTMLPanel>
 </ui:UiBinder> 

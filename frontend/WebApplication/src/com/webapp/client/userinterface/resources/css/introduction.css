@@ -1,3 +1,16 @@
 .header {
-	color: red;
+	color: black;
+	font-size: 35px;
+	margin-bottom: 5px;
+}
+
+.main {
+	width: 400px;
+	margin-top: 10%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.boxes {
+	width: 300px;
 }

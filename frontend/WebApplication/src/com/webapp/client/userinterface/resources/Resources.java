@@ -12,5 +12,9 @@ public interface Resources extends ClientBundle {
 
 	public interface introduction extends CssResource {
 		String header();
+
+		String main();
+		
+		String boxes();
 	}
 }
