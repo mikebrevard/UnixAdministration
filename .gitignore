@@ -1,5 +1,19 @@
 /.project
+.metadata/
+*.prefs
+*.class
+*.arff
 
-*.properties
-frontend/WebApp/build/classes/AwsCredentials.properties
-frontend/WebApp/src/AwsCredentials.properties
+frontend/WebApplication/.settings/com.google.gdt.eclipse.core.prefs
+frontend/WebApplication/.gwt
+frontend/WebApplication/.settings
+frontend/WebApplication/gwt-unitCache
+frontend/WebApplication/gwt-unitCache/
+frontend/WebApplication/logs
+frontend/WebApplication/test-classes
+frontend/WebApplication/war/webapplication/*
+frontend/WebApplication/war/CS183WebApplication.war
+frontend/WebApplication/war/WEB-INF/deploy/*
+frontend/WebApplication/war/WEB-INF/classes/*
+
+RemoteSystemsTempFiles/
