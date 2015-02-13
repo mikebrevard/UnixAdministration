@@ -12,16 +12,33 @@ Vagrant.configure(2) do |config|
 
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://atlas.hashicorp.com/search.
-  config.vm.box = "chef/centos-6.5"
+  config.vm.define "ws1" do |ws1|
+
+    ws1.vm.box = "package.box"
+    # install basic software
+    #config.vm.provision :shell, path: "installbasepackages.sh"
+    # Access by http://127.0.0.1:8081
+    ws1.vm.network "forwarded_port", guest: 80, host: 8084
+
+    # disable mount of default directory
+    ws1.vm.synced_folder ".", "/vagrant", disabled: true
+  end
+
+
+  config.vm.define "ws2" do |ws2|
+
+    ws2.vm.box = "package.box"
+    # install basic software
+    #config.vm.provision :shell, path: "installbasepackages.sh"
+    # Access by http://127.0.0.1:8081
+    ws2.vm.network "forwarded_port", guest: 80, host: 8085
+
+    # disable mount of default directory
+    ws2.vm.synced_folder ".", "/vagrant", disabled: true
+  end
 
   # ========================================================================= #
-  # install basic software
-  config.vm.provision :shell, path: "installbasepackages.sh"
-  # Access by http://127.0.0.1:8081
-  config.vm.network "forwarded_port", guest: 80, host: 8083
 
-  # disable mount of default directory
-  config.vm.synced_folder ".", "/vagrant", disabled: true
 
   # ========================================================================= #
   # Disable automatic box update checking. If you disable this, then
