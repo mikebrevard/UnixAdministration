@@ -19,7 +19,7 @@ frontend/WebApplication/war/WEB-INF/classes/*
 RemoteSystemsTempFiles/
 
 # Vagrant ################
-.vagrant/
+vagrant/.vagrant/
 
 # OS ####################
 .DS_Store
