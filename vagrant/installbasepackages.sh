@@ -6,7 +6,7 @@ touch $VAGRANTLOG
 
 
 # update
-yum -y update
+# yum -y update
 
 # mount fix 1 ====== This sucked. ==============================================
 # yum install kernel-devel-2.6.32-431.el6.x86_64  # MT: rebuild virtualbox addons
@@ -33,8 +33,8 @@ chkconkconfig mysqld on
 
 # install Jmeter
 mkdir $TMPDIR
-wget http://www.carfab.com/apachesoftware//jmeter/binaries/apache-jmeter-2.12.tgz -O ~/.MartinVagrantInstall/apacheJmeter.tgz
-tar -xzf ~/.MartinVagrantInstall/apacheJmeter.tgz -C ~/Desktop/
+wget http://www.carfab.com/apachesoftware//jmeter/binaries/apache-jmeter-2.12.tgz -O ~/.MartinVagrantInstall/apacheJmeter.tgz > /dev/null
+tar -xzf ~/.MartinVagrantInstall/apacheJmeter.tgz -C ~/Desktop/ > /dev/null
 rm -rf $TMPDIR
 
 /var/www/html/
