@@ -19,13 +19,15 @@ public interface Resources extends ClientBundle {
 		String main();
 
 		String boxes();
+
+		String label();
 	}
-	
+
 	public interface mainpage extends CssResource {
 		String header();
 
 		String main();
-		
-		String TODO();
+
+		String results();
 	}
 }

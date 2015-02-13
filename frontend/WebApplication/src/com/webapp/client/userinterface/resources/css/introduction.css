@@ -5,12 +5,20 @@
 }
 
 .main {
-	width: 400px;
+	width: 700px;
 	margin-top: 10%;
 	margin-left: auto;
 	margin-right: auto;
+	padding: 5px;
+	border: 1px solid black;
 }
 
 .boxes {
 	width: 300px;
+	font-size: 18px;
+}
+
+.label {
+	width: 200px;
+	font-size: 14px;
 }

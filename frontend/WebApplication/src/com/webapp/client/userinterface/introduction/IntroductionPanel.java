@@ -5,10 +5,8 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
-import com.google.gwt.user.client.ui.PasswordTextBox;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -25,8 +23,17 @@ public class IntroductionPanel extends ResourceWidget {
 			UiBinder<Widget, IntroductionPanel> {
 	}
 
-	public IntroductionPanel() {
+	public IntroductionPanel(String read, String write, String file) {
 		initWidget(uiBinder.createAndBindUi(this));
+
+		if (read != null)
+			reads.setText(read);
+
+		if (write != null)
+			writes.setText(write);
+
+		if (file != null)
+			filePath.setText(file);
 
 		main.setCellHorizontalAlignment(submit,
 				HasHorizontalAlignment.ALIGN_RIGHT);
@@ -36,23 +43,24 @@ public class IntroductionPanel extends ResourceWidget {
 
 			@Override
 			public void onClick(ClickEvent event) {
-				Window.alert("Information\nServer: " + server.getText()
-						+ "\nLogin: " + login.getText()
-						+ "\t\nPassword: ...nope...");
-				Toolkit.loadWidget(new MainPanel(server.getText(), login
-						.getText()));
+				execute();
 			}
 		});
+	}
+
+	private void execute() {
+		Toolkit.loadWidget(new MainPanel(reads.getText(), writes.getText(),
+				filePath.getText()));
 	}
 
 	@UiField
 	VerticalPanel main;
 	@UiField
-	TextBox server;
+	TextBox reads;
 	@UiField
-	TextBox login;
-	@UiField
-	PasswordTextBox password;
+	TextBox writes;
 	@UiField
 	Button submit;
+	@UiField
+	TextBox filePath;
 }

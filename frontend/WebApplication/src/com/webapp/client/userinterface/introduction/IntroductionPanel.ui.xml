@@ -11,29 +11,29 @@
 				<table>
 					<tr>
 						<td>
-							<g:Label>Server: </g:Label>
+							<g:Label styleName="{css.introduction.label}">Number of reads from MySQL: </g:Label>
 						</td>
 						<td>
 							<g:TextBox styleName="{css.introduction.boxes}"
-								ui:field="server" />
+								ui:field="reads" />
 						</td>
 					</tr>
 					<tr>
 						<td>
-							<g:Label>Login: </g:Label>
+							<g:Label styleName="{css.introduction.label}">Number of writes from MySQL: </g:Label>
 						</td>
 						<td>
 							<g:TextBox styleName="{css.introduction.boxes}"
-								ui:field="login" />
+								ui:field="writes" />
 						</td>
 					</tr>
 					<tr>
 						<td>
-							<g:Label>Password: </g:Label>
+							<g:Label styleName="{css.introduction.label}">Result Destination (file path): </g:Label>
 						</td>
 						<td>
-							<g:PasswordTextBox styleName="{css.introduction.boxes}"
-								ui:field="password" />
+							<g:TextBox styleName="{css.introduction.boxes}"
+								ui:field="filePath" />
 						</td>
 					</tr>
 				</table>
