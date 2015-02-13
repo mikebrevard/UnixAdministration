@@ -7,9 +7,8 @@
 		<g:VerticalPanel styleName="{css.mainpage.main}"
 			ui:field="main">
 			<g:Label ui:field="header" styleName="{css.mainpage.header}" />
-			<g:VerticalPanel styleName="{css.mainpage.TODO}">
-				<g:Label styleName="{css.mainpage.header}">TODO:</g:Label>
-			</g:VerticalPanel>
+			<g:Label ui:field="results" styleName="{css.mainpage.results}" />
+			<g:Label ui:field="pathInformation" styleName="{css.mainpage.results}" />
 		</g:VerticalPanel>
 	</g:HTMLPanel>
 </ui:UiBinder> 
