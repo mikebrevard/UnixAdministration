@@ -5,7 +5,7 @@ TMPDIR=~/.MartinVagrantInstall/
 touch $VAGRANTLOG
 
 
-# update
+# update !!!!!
 # yum -y update
 
 # mount fix 1 ====== This sucked. ==============================================
@@ -34,7 +34,7 @@ chkconkconfig mysqld on
 # install Jmeter
 mkdir $TMPDIR
 wget http://www.carfab.com/apachesoftware//jmeter/binaries/apache-jmeter-2.12.tgz -O ~/.MartinVagrantInstall/apacheJmeter.tgz > /dev/null
-tar -xzf ~/.MartinVagrantInstall/apacheJmeter.tgz -C ~/Desktop/ 
+tar -xzf ~/.MartinVagrantInstall/apacheJmeter.tgz -C ~/Desktop/
 rm -rf $TMPDIR
 
 /var/www/html/

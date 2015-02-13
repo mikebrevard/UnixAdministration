@@ -12,30 +12,32 @@ Vagrant.configure(2) do |config|
 
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://atlas.hashicorp.com/search.
-  config.vm.define "ws1" do |ws1|
+  config.vm.define "apache" do |apache|
 
-    ws1.vm.box = "package.box"
+    apache.vm.box = "chef/centos-6.5"
     # install basic software
-    #config.vm.provision :shell, path: "installbasepackages.sh"
-    # Access by http://127.0.0.1:8081
-    ws1.vm.network "forwarded_port", guest: 80, host: 8084
-
+    apache.vm.provision :shell, path: "apachebootstrap.sh"
+    # Network configurations
+    apache.vm.network "forwarded_port", guest: 80, host: 8082
+    apache.vm.network "private_network", ip: "192.168.50.2"
     # disable mount of default directory
-    ws1.vm.synced_folder ".", "/vagrant", disabled: true
+    # ws1.vm.synced_folder ".", "/vagrant", disabled: true
   end
 
 
-  config.vm.define "ws2" do |ws2|
+  config.vm.define "db" do |db|
 
-    ws2.vm.box = "package.box"
+    db.vm.box = "chef/centos-6.5"
     # install basic software
-    #config.vm.provision :shell, path: "installbasepackages.sh"
+    config.vm.provision :shell, path: "dbbootstrap.sh"
     # Access by http://127.0.0.1:8081
-    ws2.vm.network "forwarded_port", guest: 80, host: 8085
+    db.vm.network "forwarded_port", guest: 80, host: 8083
+    db.vm.network "private_network", ip: "192.168.50.3"
 
     # disable mount of default directory
-    ws2.vm.synced_folder ".", "/vagrant", disabled: true
+    # ws2.vm.synced_folder ".", "/vagrant", disabled: true
   end
+
 
   # ========================================================================= #
 
