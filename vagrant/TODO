@@ -1,0 +1,29 @@
+TODO
+
+address this:
+Automatically set root password for mysql. there's a stackoverflow fix out there. 
+==> db:
+==> db: To start mysqld at boot time you have to copy
+==> db: support-files/mysql.server to the right place for your system
+==> db:
+==> db: PLEASE REMEMBER TO SET A PASSWORD FOR THE MySQL root USER !
+==> db: To do so, start the server, then issue the following commands:
+==> db:
+==> db: /usr/bin/mysqladmin -u root password 'new-password'
+==> db: /usr/bin/mysqladmin -u root -h localhost.localdomain password 'new-password'
+==> db:
+==> db: Alternatively you can run:
+==> db: /usr/bin/mysql_secure_installation
+==> db:
+==> db: which will also give you the option of removing the test
+==> db: databases and anonymous user created by default.  This is
+==> db: strongly recommended for production servers.
+==> db:
+==> db: See the manual for more instructions.
+==> db:
+==> db: You can start the MySQL daemon with:
+==> db: cd /usr ; /usr/bin/mysqld_safe &
+==> db:
+==> db: You can test the MySQL daemon with mysql-test-run.pl
+==> db: cd /usr/mysql-test ; perl mysql-test-run.pl
+==> db:

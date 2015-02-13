@@ -14,7 +14,7 @@ Vagrant.configure(2) do |config|
   # boxes at https://atlas.hashicorp.com/search.
   config.vm.define "apache" do |apache|
 
-    apache.vm.box = "chef/centos-7.0"
+    apache.vm.box = "chef/centos-6.6"
     # install basic software
     apache.vm.provision :shell, path: "apachebootstrap.sh"
     # Network configurations
@@ -27,7 +27,7 @@ Vagrant.configure(2) do |config|
 
   config.vm.define "db" do |db|
 
-    db.vm.box = "chef/centos-7.0"
+    db.vm.box = "chef/centos-6.6"
     # install basic software
     config.vm.provision :shell, path: "dbbootstrap.sh"
     # Access by http://127.0.0.1:8081

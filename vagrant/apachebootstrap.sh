@@ -21,4 +21,6 @@ service httpd restart
 chkconfig httpd on
 
 # log apache service
-chkconfig --list httpd
+echo >> $VAGRANTLOG
+echo "Apache httpd" | tee $VAGRANTLOG
+chkconfig --list httpd | tee $VAGRANTLOG

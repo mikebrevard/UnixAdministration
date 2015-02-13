@@ -10,11 +10,11 @@ touch $VAGRANTLOG
 yum install -y gcc* kernel-devel epel-release
 
 # installing    mysql
-yum -y install  mysql-server
+yum -y install mysql-server
 
 # mysql services -- [ON]
 /etc/init.d/mysqld restart
-chkconkconfig mysqld on
+chkconfig mysqld on
 
 # log apache service
 chkconfig --list mysqld

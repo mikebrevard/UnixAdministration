@@ -21,6 +21,7 @@ RemoteSystemsTempFiles/
 # Vagrant ################
 vagrant/.vagrant/
 *.box
+*:
 
 # OS ####################
 .DS_Store
