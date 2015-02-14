@@ -32,8 +32,9 @@ Vagrant.configure(2) do |config|
     db.vm.provision :shell, path: "dbbootstrap.sh"
     # Access by http://127.0.0.1:8081
     db.vm.network "forwarded_port", guest: 80, host: 8083
-    db.vm.network "private_network", ip: "192.168.50.3"
+    db.vm.network "forwarded_port", guest: 3306, host: 8093
 
+    db.vm.network "private_network", ip: "192.168.50.3"
     # disable mount of default directory
     # ws2.vm.synced_folder ".", "/vagrant", disabled: true
   end

@@ -18,3 +18,11 @@ chkconfig mysqld on
 
 # log apache service
 chkconfig --list mysqld
+
+# set up sql
+echo "Init database and table. . ."
+sudo mysql < /vagrant/etc/sql/basicTableInit.sql
+echo "Init completed."
+echo "Populating database"
+sudo mysql < /vagrant/etc/sql/basicTablePopulate.sql
+echo "Populate completed."
