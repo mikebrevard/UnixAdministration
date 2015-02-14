@@ -21,7 +21,7 @@ public class MySQLServiceImpl extends RemoteServiceServlet implements
 
 	private void initConnection() {
 
-		String url = "jdbc:mysql://127.0.0.1:3306/";
+		String url = "jdbc:mysql://192.168.50.2:3306/";
 		String db = "hostdb";
 		String driver = "com.mysql.jdbc.Driver";
 		String user = "root";
@@ -72,6 +72,7 @@ public class MySQLServiceImpl extends RemoteServiceServlet implements
 		}
 
 		results.setIsSuccessful(true);
+		results.setMessage("Made it to the end!");
 		return results;
 	}
 

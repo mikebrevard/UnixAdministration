@@ -9,6 +9,7 @@
 			<g:Label ui:field="header" styleName="{css.mainpage.header}" />
 			<g:Label ui:field="results" styleName="{css.mainpage.results}" />
 			<g:Label ui:field="pathInformation" styleName="{css.mainpage.results}" />
+			<g:Label>build: 0.1</g:Label>
 		</g:VerticalPanel>
 	</g:HTMLPanel>
 </ui:UiBinder> 

@@ -74,6 +74,9 @@ public class MainPanel extends ResourceWidget {
 			result.setStopTime(System.currentTimeMillis());
 			readResults[result.getIndex()] = result;
 			System.out.println("Time it took: " + result.getDuration());
+			header.setText("The test was succesful? "
+					+ result.getIsSuccessful());
+			results.setText(result.getMessage());
 		}
 
 		@Override
