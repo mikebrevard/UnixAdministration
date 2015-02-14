@@ -1,0 +1,19 @@
+.header {
+	color: black;
+	font-size: 40px;
+	text-decoration: underline;
+	margin-bottom: 30px;
+}
+
+.main {
+	margin-top: 2%;
+	margin-left: 3%;
+	margin-right: 3%;
+	width: 100%;
+}
+
+.results {
+	font-size: 18px;
+	text-align: center;
+	margin-top: 5px;
+}

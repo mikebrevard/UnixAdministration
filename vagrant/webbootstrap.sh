@@ -2,6 +2,7 @@
 
 VAGRANTLOG=~/vagrant.log
 TMPDIR=~/.MartinVagrantInstall/
+WEBAPP=/vagrant/webapp/
 touch $VAGRANTLOG
 
 
@@ -24,3 +25,11 @@ chkconfig httpd on
 echo >> $VAGRANTLOG
 echo "Apache httpd" | tee $VAGRANTLOG
 chkconfig --list httpd | tee $VAGRANTLOG
+
+if [ -d $WEBAPP ]; then
+  cp -r /vagrant/webapp/ /var/www/html/
+  echo "$WEBAPP successfully deployed" | tee $VAGRANTLOG
+else
+  echo "$WEBAPP not found" >> $VAGRANTLOG
+  >&2 echo "$WEBAPP not found"
+fi
