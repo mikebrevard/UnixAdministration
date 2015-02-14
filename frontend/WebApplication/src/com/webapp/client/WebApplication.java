@@ -16,6 +16,10 @@ public class WebApplication implements EntryPoint {
 	 */
 	public void onModuleLoad() {
 
+		// TODO:
+		// 1. Add in MySQL saving
+		// 2. Add in Appending to file (with date)
+
 		// example
 		// 127.0.0.1:8888/WebApplication.html?gwt.codesvr=127.0.0.1:9997&read=6&write=4
 		String read = Window.Location.getParameter("read");
