@@ -29,5 +29,7 @@ public interface Resources extends ClientBundle {
 		String main();
 
 		String results();
+		
+		String version();
 	}
 }

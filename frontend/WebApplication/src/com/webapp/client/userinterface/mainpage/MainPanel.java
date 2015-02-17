@@ -81,8 +81,8 @@ public class MainPanel extends ResourceWidget {
 
 		@Override
 		public void onFailure(Throwable caught) {
-			// TODO Auto-generated method stub
-
+			header.setText("Failure (readCallback)");
+			results.setText(caught.getLocalizedMessage());
 		}
 	};
 
