@@ -11,6 +11,7 @@ import com.google.gwt.user.client.ui.Widget;
 import com.webapp.client.services.MySQLService;
 import com.webapp.client.services.MySQLServiceAsync;
 import com.webapp.client.userinterface.ResourceWidget;
+import com.webapp.shared.Constants;
 import com.webapp.shared.Results;
 
 public class MainPanel extends ResourceWidget {
@@ -38,18 +39,19 @@ public class MainPanel extends ResourceWidget {
 		writeResults = new Results[this.write];
 
 		initWidget(uiBinder.createAndBindUi(this));
+		version.setText(Constants.VERSION);
 
-		String status = "Pass";
+		String status = "Pass (Test, no actually work done)";
 		String message = "This is a generic message";
 
-		header.setText("Status: " + status);
+		header.setText(status);
 
 		Date date = new Date();
 		String text = date + ": Status is " + status
 				+ ". MySQL (read, write) is (" + read + ", " + write
 				+ "). Message is '" + message + "'";
 		results.setText(text);
-		pathInformation.setText("Information appended to '" + file + "'");
+		// pathInformation.setText("Information appended to '" + file + "'");
 
 		saveStats();
 	}
@@ -74,15 +76,16 @@ public class MainPanel extends ResourceWidget {
 			result.setStopTime(System.currentTimeMillis());
 			readResults[result.getIndex()] = result;
 			System.out.println("Time it took: " + result.getDuration());
-			header.setText("The test was succesful? "
-					+ result.getIsSuccessful());
+			String text = (result.getIsSuccessful()) ? "Pass (Read)"
+					: "Fail (Read)";
+			header.setText(text);
 			results.setText(result.getMessage());
 		}
 
 		@Override
 		public void onFailure(Throwable caught) {
 			header.setText("Failure (readCallback)");
-			results.setText(caught.getLocalizedMessage());
+			results.setText(caught.getCause() + ":\t" + caught);
 		}
 	};
 
@@ -108,4 +111,6 @@ public class MainPanel extends ResourceWidget {
 	Label results;
 	@UiField
 	Label pathInformation;
+	@UiField
+	Label version;
 }

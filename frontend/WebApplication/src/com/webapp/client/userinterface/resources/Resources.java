@@ -21,6 +21,8 @@ public interface Resources extends ClientBundle {
 		String boxes();
 
 		String label();
+		
+		String version();
 	}
 
 	public interface mainpage extends CssResource {

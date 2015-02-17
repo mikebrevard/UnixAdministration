@@ -16,7 +16,7 @@ import com.webapp.shared.Results;
 @SuppressWarnings("serial")
 public class MySQLServiceImpl extends RemoteServiceServlet implements
 		MySQLService {
-	private Connection connection;
+	private Connection connection = null;
 	private final static String TABLE = "basicTable";
 
 	private void initConnection() {
@@ -49,25 +49,31 @@ public class MySQLServiceImpl extends RemoteServiceServlet implements
 	@Override
 	public Results read(Results results) {
 
-		if (connection == null)
-			initConnection();
+		try {
+			if (connection == null)
+				initConnection();
+		} catch (Exception e) {
+			results.setIsSuccessful(false);
+			results.setMessage("MySQL (read connection): "
+					+ e.getLocalizedMessage());
+			return results;
+		}
 
-		String query = "SELECT * FROM " + TABLE;
+		// String query = "SELECT * FROM " + TABLE;
 
 		try {
-			Statement select = connection.createStatement();
-			ResultSet result = select.executeQuery(query);
-			while (result.next()) {
-				String s = result.getString(0);
-				System.out.println("First column: " + s);
-			}
-			select.close();
-			result.close();
+			// Statement select = connection.createStatement();
+			// ResultSet result = select.executeQuery(query);
+			// // while (result.next()) {
+			// // String s = result.getString(0);
+			// // System.out.println("First column: " + s);
+			// // }
+			// select.close();
+			// result.close();
 			connection.close();
 		} catch (SQLException e) {
 			results.setIsSuccessful(false);
-			results.setMessage(e.getLocalizedMessage());
-			System.err.println("Mysql Statement Error: " + query);
+			results.setMessage("MySQL (read): " + e.getLocalizedMessage());
 			return results;
 		}
 

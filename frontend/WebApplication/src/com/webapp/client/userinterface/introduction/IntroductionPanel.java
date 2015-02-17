@@ -11,12 +11,14 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.webapp.client.userinterface.ResourceWidget;
 import com.webapp.client.userinterface.mainpage.MainPanel;
 import com.webapp.client.userinterface.utilities.Toolkit;
+import com.webapp.shared.Constants;
 
 public class IntroductionPanel extends ResourceWidget {
 
@@ -31,6 +33,9 @@ public class IntroductionPanel extends ResourceWidget {
 
 	public IntroductionPanel(String read, String write, String file) {
 		initWidget(uiBinder.createAndBindUi(this));
+		version.setText(Constants.VERSION);
+		reads.setText("0");
+		writes.setText("0");
 
 		if (read != null)
 			reads.setText(read);
@@ -94,4 +99,6 @@ public class IntroductionPanel extends ResourceWidget {
 	Button submit;
 	@UiField
 	TextBox filePath;
+	@UiField
+	Label version;
 }

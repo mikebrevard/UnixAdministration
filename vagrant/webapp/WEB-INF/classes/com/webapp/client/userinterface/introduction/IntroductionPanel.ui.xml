@@ -39,6 +39,7 @@
 				</table>
 			</g:HTMLPanel>
 			<g:Button ui:field="submit">Continue</g:Button>
+			<g:Label styleName="{css.introduction.version}" ui:field="version" />
 		</g:VerticalPanel>
 	</g:HTMLPanel>
 </ui:UiBinder> 
