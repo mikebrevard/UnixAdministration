@@ -2,9 +2,7 @@ package com.webapp.server;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.webapp.client.services.MySQLService;
@@ -22,7 +20,7 @@ public class MySQLServiceImpl extends RemoteServiceServlet implements
 	private void initConnection() {
 
 		String url = "jdbc:mysql://192.168.50.2:3306/";
-		String db = "hostdb";
+		String db = "UnixTestDB";
 		String driver = "com.mysql.jdbc.Driver";
 		String user = "root";
 		String pass = "";
@@ -37,10 +35,13 @@ public class MySQLServiceImpl extends RemoteServiceServlet implements
 			e.printStackTrace();
 		}
 		try {
-
+			System.out.println("CONNECTION: ");
+			System.out.println("\t" + url + db);
+			System.out.println("\t" + user);
+			System.out.println("\t" + pass);
 			connection = DriverManager.getConnection(url + db, user, pass);
 		} catch (SQLException e) {
-			System.err.println("Mysql Connection Error: ");
+			System.err.println("Mysql Connection Error: " + e.getLocalizedMessage());
 			e.printStackTrace();
 		}
 

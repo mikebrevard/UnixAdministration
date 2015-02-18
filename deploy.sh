@@ -18,7 +18,7 @@ cd vagrant/webapp/
 unzip CS183WebApplication.zip
 rm -f CS183WebApplication.zip
 
-echo "Reload provision"
-cd ../
-vagrant reload --provision
+# echo "Reload provision"
+# cd ../
+# vagrant reload --provision
 
