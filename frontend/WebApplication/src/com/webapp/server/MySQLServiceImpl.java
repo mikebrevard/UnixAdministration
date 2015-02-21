@@ -22,8 +22,8 @@ public class MySQLServiceImpl extends RemoteServiceServlet implements
 		String url = "jdbc:mysql://192.168.50.2:3306/";
 		String db = "UnixTestDB";
 		String driver = "com.mysql.jdbc.Driver";
-		String user = "root";
-		String pass = "";
+		String user = "unixadmin";
+		String pass = "unixadmin";
 
 		try {
 			Class.forName(driver).newInstance();
