@@ -19,7 +19,7 @@ public class MySQLServiceImpl extends RemoteServiceServlet implements
 
 	private void initConnection() {
 
-		String url = "jdbc:mysql://192.168.50.2:3306/";
+		String url = "jdbc:mysql://127.0.0.1:8093/";
 		String db = "UnixTestDB";
 		String driver = "com.mysql.jdbc.Driver";
 		String user = "unixadmin";
