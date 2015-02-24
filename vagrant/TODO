@@ -1,5 +1,6 @@
 TODO
 
+
 address this:
 Automatically set root password for mysql. there's a stackoverflow fix out there. 
 ==> db:
