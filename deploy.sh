@@ -11,12 +11,12 @@ cd frontend/WebApplication/war
 
 echo "Move project to webapp folder"
 cd ../../../
-mv frontend/WebApplication/war/CS183WebApplication.zip vagrant/webapp/
+mv frontend/WebApplication/war/CS183WebApplication.war vagrant/webapp/
 
-echo "Unzip project"
-cd vagrant/webapp/
-unzip CS183WebApplication.zip
-rm -f CS183WebApplication.zip
+# echo "Unzip project"
+# cd vagrant/webapp/
+# unzip CS183WebApplication.zip
+# rm -f CS183WebApplication.zip
 
 # echo "Reload provision"
 # cd ../

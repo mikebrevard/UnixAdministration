@@ -2,13 +2,13 @@
 #!/usr/bin/expect
 
 clear
-echo "Build War: CS 183 Web Application: user: $1"
+echo "Build War: CS 183 Web Application"
 
 echo 'Remove old war if exists'
-rm -f CS183WebApplication.zip
+rm -f CS183WebApplication.war
 
 echo 'Compress files'
-zip -r CS183WebApplication.zip favicon.ico webapplication/ WebApplication.html WebApplication.css WEB-INF/ -x 'logs/*.log'
+zip -r CS183WebApplication.war favicon.ico webapplication/ WebApplication.html WebApplication.css WEB-INF/ -x 'logs/*.log'
 
 # echo 'Move .zip'
 # rm -rf ../../../vagrant/webapp/*
