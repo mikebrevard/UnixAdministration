@@ -2,7 +2,9 @@ package com.webapp.server;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.webapp.client.services.MySQLService;
@@ -19,7 +21,7 @@ public class MySQLServiceImpl extends RemoteServiceServlet implements
 
 	private void initConnection() {
 
-		String url = "jdbc:mysql://127.0.0.1:8093/";
+		String url = "jdbc:mysql://192.168.50.3:3306/";
 		String db = "UnixTestDB";
 		String driver = "com.mysql.jdbc.Driver";
 		String user = "unixadmin";
@@ -60,17 +62,17 @@ public class MySQLServiceImpl extends RemoteServiceServlet implements
 			return results;
 		}
 
-		// String query = "SELECT * FROM " + TABLE;
+		String query = "SELECT * FROM " + TABLE;
 
 		try {
-			// Statement select = connection.createStatement();
-			// ResultSet result = select.executeQuery(query);
-			// // while (result.next()) {
-			// // String s = result.getString(0);
-			// // System.out.println("First column: " + s);
-			// // }
-			// select.close();
-			// result.close();
+			 Statement select = connection.createStatement();
+			 ResultSet result = select.executeQuery(query);
+			  while (result.next()) {
+			  String s = result.getString(1);
+			  System.out.println("First column: " + s);
+			  }
+			 select.close();
+			 result.close();
 			connection.close();
 		} catch (SQLException e) {
 			results.setIsSuccessful(false);
