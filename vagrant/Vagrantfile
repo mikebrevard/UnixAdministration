@@ -46,6 +46,7 @@ Vagrant.configure(2) do |config|
     webapp.vm.provision :shell, path: "webbootstrap.sh"
     # Access by http://127.0.0.1:8081
     webapp.vm.network "forwarded_port", guest: 80, host: 8084
+    webapp.vm.network "forwarded_port", guest: 8080, host: 8800
     webapp.vm.network "private_network", ip: "192.168.50.4"
 
     # disable mount of default directory
