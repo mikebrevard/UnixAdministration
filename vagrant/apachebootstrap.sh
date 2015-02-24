@@ -24,3 +24,10 @@ chkconfig httpd on
 echo >> $VAGRANTLOG
 echo "Apache httpd" | tee $VAGRANTLOG
 chkconfig --list httpd | tee $VAGRANTLOG
+
+#installing haproxy
+yum install haproxy
+
+# haproxy services -- [ON]
+service haproxy restart
+chkconfig haproxy on
