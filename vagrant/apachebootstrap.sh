@@ -7,11 +7,12 @@ touch $VAGRANTLOG
 
 # update !!!!!
 # yum -y update
-
-yum install -y gcc* kernel-devel epel-release
+echo "insalling gcc and other basic stuff. (may take a moment)"
+yum install -y gcc* kernel-devel epel-release > /dev/null
 
 # installing   apache
-yum -y install httpd
+echo "installing httpd"
+yum -y install httpd > /dev/null
 
 # apache services -- [ON]
 #rm -rf /var/www/html                      # change webroot to vagrant folder
@@ -21,12 +22,11 @@ service httpd restart
 chkconfig httpd on
 
 # log apache service
-echo >> $VAGRANTLOG
-echo "Apache httpd" | tee $VAGRANTLOG
-chkconfig --list httpd | tee $VAGRANTLOG
+echo "Apache httpd"
+chkconfig --list httpd
 
 #installing haproxy
-yum install haproxy
+sudo yum -y install haproxy
 
 # haproxy services -- [ON]
 service haproxy restart

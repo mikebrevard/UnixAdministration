@@ -23,9 +23,8 @@ service httpd restart
 chkconfig httpd on
 
 # log apache service
-echo >> $VAGRANTLOG
-echo "Apache httpd" | tee $VAGRANTLOG
-chkconfig --list httpd | tee $VAGRANTLOG
+echo "Apache httpd"
+chkconfig --list httpd
 
 #if [ -d $WEBAPP ]; then
 #  cp -r /vagrant/webapp/ /var/www/html/
