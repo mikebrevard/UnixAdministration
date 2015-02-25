@@ -6,8 +6,12 @@ touch $VAGRANTLOG
 
 # update !!!!!
 # yum -y update
-
-yum install -y gcc* kernel-devel epel-release
+echo "insalling gcc and other basic stuff. (may take a moment)"
+if yum list installed kernel-devel; then
+  echo "skipping these installs"
+else
+  yum install -y gcc* kernel-devel epel-release > /dev/null
+fi
 
 # installing    mysql
 yum -y install mysql-server

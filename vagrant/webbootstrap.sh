@@ -9,7 +9,11 @@ touch $VAGRANTLOG
 # update !!!!!
 # yum -y update
 echo "insalling gcc and other basic stuff. (may take a moment)"
-yum install -y gcc* kernel-devel epel-release > /dev/null
+if yum list installed kernel-devel; then
+  echo "skipping these installs"
+else
+  yum install -y gcc* kernel-devel epel-release > /dev/null
+fi
 
 # installing   apache
 echo "installing httpd"
@@ -43,7 +47,7 @@ echo "wget java install"
 if [ ! -d /usr/java/jdk1.7.0_75 ]; then
   cd /tmp/
   wget --no-cookies --no-check-certificate --header "Cookie: gpw_e24=http%3A%2F%2Fwww.oracle.com%2F; oraclelicense=accept-securebackup-cookie" "http://download.oracle.com/otn-pub/java/jdk/7u75-b13/jdk-7u75-linux-i586.tar.gz" >/dev/null 2>&1
-  tar -xvf jdk-7u75-linux-i586.tar.gz
+  tar -xvf jdk-7u75-linux-i586.tar.gz > /dev/null
   sudo mkdir /usr/java/
   sudo mv jdk1.7.0_75 /usr/java/
 else
@@ -66,7 +70,7 @@ if [ ! -d /usr/local/tomcat7 ]; then
   cd /tmp/
   echo "wget tomcat install"
   wget http://supergsego.com/apache/tomcat/tomcat-7/v7.0.59/bin/apache-tomcat-7.0.59.tar.gz >/dev/null 2>&1
-  tar -xvf apache-tomcat-7.0.59.tar.gz
+  tar -xvf apache-tomcat-7.0.59.tar.gz > /dev/null
   sudo mkdir /usr/local/tomcat7
   sudo mv /tmp/apache-tomcat-7.0.59/* /usr/local/tomcat7/
 else
