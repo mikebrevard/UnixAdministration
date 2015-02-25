@@ -51,14 +51,16 @@ fi
 # sudo echo "export JAVA_HOME=/usr/java/jdk1.7.0_75/" > /usr/local/tomcat7/bin/setenv.sh
 # sudo chmod +x /usr/local/tomcat7/bin/setenv.sh
 echo "configuring java..."
-JAVACONFIG=$(sudo cat ~/.bash_profile | grep -q java | wc -c)
-if [ ! $JAVACONFIG -eq 0 ]; then
-  echo "JAVA CONFIGURED ALREADY"
-else
-  echo "done."
-  cat /vagrant/etc/scripts/javabashconfig >> ~/.bash_profile
-fi
 
+JAVA_HOME=/usr/java/jdk1.7.0_75
+export JAVA_HOME
+PATH=$JAVA_HOME/bin:$PATH
+export PATH
+
+echo "source /vagrant/etc/scripts/configjava.sh" >> /home/vagrant/.bashrc
+echo "JAVA_HOME: $JAVA_HOME"
+echo "PATH: $PATH"
+echo "configuring done."
 # Install tomcat7
 echo "=================================================================="
 echo "installing tomcat7......................"
@@ -97,5 +99,5 @@ if [ -f "/vagrant/webapp/CS183WebApplication.war" ]; then
   sudo cp /vagrant/webapp/CS183WebApplication.war /usr/local/tomcat7/webapps/
 fi
 
-sudo -E /usr/local/tomcat7/bin/shutdown.sh
-sudo -E /usr/local/tomcat7/bin/startup.sh
+sudo -E /usr/local/tomcat7/bin/shutdown.sh | tee /dev/null
+sudo -E /usr/local/tomcat7/bin/startup.sh | tee /dev/null
