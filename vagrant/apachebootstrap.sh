@@ -27,12 +27,9 @@ chkconfig --list httpd
 #installing haproxy
 echo "=================================================================="
 sudo yum -y install haproxy
-if [ -f "/vagrant/etc/haproxy.cfg" ] then;
-  echo "deleting old haproxy configuration"
-  sudo rm -f /vagrant/etc/haproxy.cfg
-fi
-echo "replacing haproxy configuration"
-sudo cp /vagrant/etc/haproxy/haproxy.cfg /etc/haproxy/
+
+echo "configuring haproxy configuration"
+cat /vagrant/etc/haproxy/haproxy.cfg >> /etc/haproxy/haproxy.cfg
 
 # haproxy services -- [ON]
 echo "starting haproxy"
