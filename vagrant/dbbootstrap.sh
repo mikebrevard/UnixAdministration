@@ -11,7 +11,8 @@ else
 fi
 
 # installing    mysql
-yum -y install mysql-server
+echo "installing mysql-server"
+yum -y install mysql-server > /dev/null
 
 # mysql services -- [ON]
 /etc/init.d/mysqld restart
@@ -20,14 +21,26 @@ chkconfig --list mysqld
 
 # set up sql user account
 echo "Creating user..."
-sudo mysql --user=root mysql < /vagrant/etc/sql/createUser.sql
-echo "User 'unixadmin' has been created with password 'unixadmin'"
-
+if [ ! -f /var/._dbinit183 ]; then
+  sudo mysql --user=root mysql < /vagrant/etc/sql/createUser.sql
+  echo "User 'unixadmin' has been created with password 'unixadmin'"
+  sudo touch /var/._dbinit183
+else
+  echo "Database has been previously initialized."
+  echo "Skipping configuration"
+fi
 
 # set up database and tables
 echo "Init database and table. . ."
-sudo mysql < /vagrant/etc/sql/basicTableInit.sql
-echo "Init completed."
-echo "Populating database"
-sudo mysql < /vagrant/etc/sql/basicTablePopulate.sql
-echo "Populate completed."
+if [ ! -f /var/._dbpop183 ]; then
+  sudo mysql < /vagrant/etc/sql/basicTableInit.sql
+  echo "Init completed."
+  echo "Populating database"
+  sudo mysql < /vagrant/etc/sql/basicTablePopulate.sql
+  echo "Populate completed."
+
+  sudo touch /var/._dbpop183
+else
+  echo "Database has been previously populated"
+  echo "skipping populating database"
+fi
