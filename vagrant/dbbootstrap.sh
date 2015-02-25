@@ -3,7 +3,7 @@
 # update !!!!!
 # yum -y update
 echo "=================================================================="
-echo "insalling gcc and other basic stuff. (may take a moment)"
+echo "installing gcc and other basic stuff. (may take a moment)"
 if yum list installed kernel-devel; then
   echo "skipping these installs"
 else

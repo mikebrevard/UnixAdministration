@@ -3,7 +3,7 @@
 # update !!!!!
 # yum -y update
 echo "=================================================================="
-echo "insalling gcc and other basic stuff. (may take a moment)"
+echo "installing gcc and other basic stuff. (may take a moment)"
 if yum list installed kernel-devel; then
   echo "skipping these installs"
 else
@@ -57,7 +57,7 @@ export JAVA_HOME
 PATH=$JAVA_HOME/bin:$PATH
 export PATH
 
-echo "source /vagrant/etc/scripts/configjava.sh" >> /home/vagrant/.bashrc
+echo "source /vagrant/etc/scripts/configjava.sh" >> /home/vagrant/.bash_profile
 echo "JAVA_HOME: $JAVA_HOME"
 echo "PATH: $PATH"
 echo "configuring done."
