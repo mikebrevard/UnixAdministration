@@ -51,10 +51,11 @@ fi
 # sudo echo "export JAVA_HOME=/usr/java/jdk1.7.0_75/" > /usr/local/tomcat7/bin/setenv.sh
 # sudo chmod +x /usr/local/tomcat7/bin/setenv.sh
 echo "configuring java..."
-
-if cat ~/.bash_profile | grep -q java; then
+JAVACONFIG=$(sudo cat ~/.bash_profile | grep -q java | wc -c)
+if [ ! $JAVACONFIG -eq 0 ]; then
   echo "JAVA CONFIGURED ALREADY"
 else
+  echo "done."
   cat /vagrant/etc/scripts/javabashconfig >> ~/.bash_profile
 fi
 
@@ -79,7 +80,6 @@ yes | sudo yum install glibc.i686 > /dev/null
 
 # Start tomcat
 echo "=================================================================="
-sudo /usr/local/tomcat7/bin/startup.sh
 
 #move webapp
 if [ -f "/vagrant/webapp/CS183WebApplication.war" ]; then
@@ -96,3 +96,6 @@ if [ -f "/vagrant/webapp/CS183WebApplication.war" ]; then
   echo "copying new war"
   sudo cp /vagrant/webapp/CS183WebApplication.war /usr/local/tomcat7/webapps/
 fi
+
+sudo -E /usr/local/tomcat7/bin/shutdown.sh
+sudo -E /usr/local/tomcat7/bin/startup.sh
