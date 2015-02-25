@@ -1,13 +1,8 @@
 #!/bin/bash
 
-VAGRANTLOG=~/vagrant.log
-TMPDIR=~/.MartinVagrantInstall/
-#WEBAPP=/vagrant/webapp/
-touch $VAGRANTLOG
-
-
 # update !!!!!
 # yum -y update
+echo "=================================================================="
 echo "insalling gcc and other basic stuff. (may take a moment)"
 if yum list installed kernel-devel; then
   echo "skipping these installs"

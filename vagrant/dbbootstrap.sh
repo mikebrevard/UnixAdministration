@@ -1,11 +1,8 @@
 #!/bin/bash
 
-VAGRANTLOG=~/vagrant.log
-TMPDIR=~/.MartinVagrantInstall/
-touch $VAGRANTLOG
-
 # update !!!!!
 # yum -y update
+echo "=================================================================="
 echo "insalling gcc and other basic stuff. (may take a moment)"
 if yum list installed kernel-devel; then
   echo "skipping these installs"
@@ -19,8 +16,6 @@ yum -y install mysql-server
 # mysql services -- [ON]
 /etc/init.d/mysqld restart
 chkconfig mysqld on
-
-# log apache service
 chkconfig --list mysqld
 
 # set up sql user account
