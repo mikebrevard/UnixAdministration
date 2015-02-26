@@ -21,17 +21,23 @@ public interface Resources extends ClientBundle {
 		String boxes();
 
 		String label();
-		
+
 		String version();
 	}
 
 	public interface mainpage extends CssResource {
 		String header();
 
+		String headerInfo();
+
 		String main();
 
 		String results();
-		
+
 		String version();
+		
+		String resultLine();
+		
+		String resultLineEmpty();
 	}
 }

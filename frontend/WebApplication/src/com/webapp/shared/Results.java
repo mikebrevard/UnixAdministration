@@ -79,4 +79,15 @@ public class Results implements Serializable {
 	public Long getDuration() {
 		return stopTime - startTime;
 	}
+
+	public String format() {
+		String display;
+
+		if (stopTime != null && startTime != null)
+			display = getDuration() + " ms";
+		else
+			display = "Something is wrong...";
+
+		return display;
+	}
 }

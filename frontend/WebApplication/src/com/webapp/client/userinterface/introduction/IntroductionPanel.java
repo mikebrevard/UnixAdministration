@@ -1,8 +1,6 @@
 package com.webapp.client.userinterface.introduction;
 
 import org.apache.log4j.Logger;
-import org.apache.log4j.MDC;
-import org.apache.log4j.NDC;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -31,17 +29,13 @@ public class IntroductionPanel extends ResourceWidget {
 			UiBinder<Widget, IntroductionPanel> {
 	}
 
-	public IntroductionPanel(String read, String write, String file) {
+	public IntroductionPanel(String read, String write, String file,
+			String update) {
 		initWidget(uiBinder.createAndBindUi(this));
 		version.setText(Constants.VERSION);
-		reads.setText("0");
-		writes.setText("0");
-
-		if (read != null)
-			reads.setText(read);
-
-		if (write != null)
-			writes.setText(write);
+		reads.setText(read);
+		writes.setText(write);
+		updates.setText(update);
 
 		if (file != null)
 			filePath.setText(file);
@@ -57,36 +51,36 @@ public class IntroductionPanel extends ResourceWidget {
 				execute();
 			}
 		});
-
-		// Simple messages
-		logger.trace("A message at trace level.");
-		logger.debug("A message at debug level.");
-		logger.info("A message at info level.");
-		logger.warn("A message at warn level.");
-
-		// Logging exceptions
-		try {
-			Integer.parseInt("Hallo");
-		} catch (NumberFormatException e) {
-			logger.error("Parsing the number failed", e);
-		}
-
-		// nested diagnostic context
-		NDC.push("ndc1");
-		NDC.push("ndc2");
-		logger.info("Test for the NDC.");
-		NDC.clear();
-
-		// mapped diagnostic context
-		MDC.put("key1", "value1");
-		MDC.put("key2", "value2");
-		logger.info("Test for the MDC.");
-		MDC.clear();
+		//
+		// // Simple messages
+		// logger.trace("A message at trace level.");
+		// logger.debug("A message at debug level.");
+		// logger.info("A message at info level.");
+		// logger.warn("A message at warn level.");
+		//
+		// // Logging exceptions
+		// try {
+		// Integer.parseInt("Hallo");
+		// } catch (NumberFormatException e) {
+		// logger.error("Parsing the number failed", e);
+		// }
+		//
+		// // nested diagnostic context
+		// NDC.push("ndc1");
+		// NDC.push("ndc2");
+		// logger.info("Test for the NDC.");
+		// NDC.clear();
+		//
+		// // mapped diagnostic context
+		// MDC.put("key1", "value1");
+		// MDC.put("key2", "value2");
+		// logger.info("Test for the MDC.");
+		// MDC.clear();
 	}
 
 	private void execute() {
 		Toolkit.loadWidget(new MainPanel(reads.getText(), writes.getText(),
-				filePath.getText()));
+				filePath.getText(), updates.getText()));
 	}
 
 	@UiField
@@ -95,6 +89,8 @@ public class IntroductionPanel extends ResourceWidget {
 	TextBox reads;
 	@UiField
 	TextBox writes;
+	@UiField
+	TextBox updates;
 	@UiField
 	Button submit;
 	@UiField
