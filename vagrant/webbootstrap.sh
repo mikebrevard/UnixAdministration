@@ -57,7 +57,7 @@ export JAVA_HOME
 PATH=$JAVA_HOME/bin:$PATH
 export PATH
 
-# echo "source /vagrant/etc/scripts/configjava.sh" >> /home/vagrant/.bash_profile
+echo "source /vagrant/etc/scripts/configjava.sh" >> /home/vagrant/.bash_profile
 echo "JAVA_HOME: $JAVA_HOME"
 echo "PATH: $PATH"
 echo "configuring done."
@@ -88,7 +88,7 @@ if [ -f "/vagrant/webapp/CS183WebApplication.war" ]; then
   # first remove the webapp if it's there
   if [ -d "/usr/local/tomcat7/webapps/CS183WebApplication/" ]; then
     echo "removing cs183webaapp dir"
-    rm -rf /usr/local/tomcat7/webapps/CS183WebApplication/
+    sudo rm -rf /usr/local/tomcat7/webapps/CS183WebApplication/
   fi
   # remove the old war file
   echo "removing old war"
