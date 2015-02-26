@@ -52,12 +52,8 @@ fi
 # sudo chmod +x /usr/local/tomcat7/bin/setenv.sh
 echo "configuring java..."
 
-JAVA_HOME=/usr/java/jdk1.7.0_75
-export JAVA_HOME
-PATH=$JAVA_HOME/bin:$PATH
-export PATH
-
-echo "source /vagrant/etc/scripts/configjava.sh" >> /home/vagrant/.bash_profile
+cp /vagrant/etc/scripts/.bash_profile /home/vagrant/.bash_profile
+source /home/vagrant/.bash_profile
 echo "JAVA_HOME: $JAVA_HOME"
 echo "PATH: $PATH"
 echo "configuring done."
