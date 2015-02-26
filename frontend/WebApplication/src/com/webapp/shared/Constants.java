@@ -2,5 +2,5 @@ package com.webapp.shared;
 
 public class Constants {
 
-	public final static String VERSION = "Version 0.6";
+	public final static String VERSION = "Version 0.9";
 }

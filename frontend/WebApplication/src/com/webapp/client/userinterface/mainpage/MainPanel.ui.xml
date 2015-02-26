@@ -6,11 +6,30 @@
 	<g:HTMLPanel>
 		<g:VerticalPanel styleName="{css.mainpage.main}"
 			ui:field="main">
-			<g:HorizontalPanel>
-				<g:Label styleName="{css.mainpage.header}">Status: </g:Label>
-				<g:Label ui:field="header" styleName="{css.mainpage.header}" />
+			<g:HorizontalPanel ui:field="topBar">
+				<g:HorizontalPanel ui:field="statusDisplay">
+					<g:Label styleName="{css.mainpage.header}">Status: </g:Label>
+					<g:Label ui:field="header" styleName="{css.mainpage.headerInfo}" />
+				</g:HorizontalPanel>
+				<g:HorizontalPanel ui:field="ipDisplay">
+					<g:Label styleName="{css.mainpage.header}">IP: </g:Label>
+					<g:Label ui:field="ip" styleName="{css.mainpage.headerInfo}" />
+				</g:HorizontalPanel>
 			</g:HorizontalPanel>
-
+			<g:HorizontalPanel ui:field="resultsDisplay">
+				<g:VerticalPanel ui:field="readPanel">
+					<g:Label styleName="{css.mainpage.header}">Read Results</g:Label>
+					<g:VerticalPanel ui:field="readDisplay" />
+				</g:VerticalPanel>
+				<g:VerticalPanel ui:field="writePanel">
+					<g:Label styleName="{css.mainpage.header}">Write Results</g:Label>
+					<g:VerticalPanel ui:field="writeDisplay" />
+				</g:VerticalPanel>
+				<g:VerticalPanel ui:field="updatePanel">
+					<g:Label styleName="{css.mainpage.header}">Update Results</g:Label>
+					<g:VerticalPanel ui:field="updateDisplay" />
+				</g:VerticalPanel>
+			</g:HorizontalPanel>
 			<g:Label ui:field="results" styleName="{css.mainpage.results}" />
 			<g:Label ui:field="pathInformation" styleName="{css.mainpage.results}" />
 		</g:VerticalPanel>

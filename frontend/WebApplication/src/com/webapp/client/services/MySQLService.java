@@ -9,7 +9,11 @@ import com.webapp.shared.Results;
  */
 @RemoteServiceRelativePath("MySQLService")
 public interface MySQLService extends RemoteService {
-	Results read(Results resultss);
+	Results read(Results results);
 
 	Results write();
+
+	Results update(Results results);
+
+	String getIP();
 }

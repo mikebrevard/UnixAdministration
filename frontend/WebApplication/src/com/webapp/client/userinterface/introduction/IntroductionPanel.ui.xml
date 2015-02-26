@@ -29,6 +29,15 @@
 					</tr>
 					<tr>
 						<td>
+							<g:Label styleName="{css.introduction.label}">Number of updates from MySQL: </g:Label>
+						</td>
+						<td>
+							<g:TextBox styleName="{css.introduction.boxes}"
+								ui:field="updates" />
+						</td>
+					</tr>
+					<tr>
+						<td>
 							<g:Label styleName="{css.introduction.label}">Result Destination (file path): </g:Label>
 						</td>
 						<td>
