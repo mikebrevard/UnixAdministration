@@ -57,7 +57,7 @@ export JAVA_HOME
 PATH=$JAVA_HOME/bin:$PATH
 export PATH
 
-echo "source /vagrant/etc/scripts/configjava.sh" >> /home/vagrant/.bash_profile
+# echo "source /vagrant/etc/scripts/configjava.sh" >> /home/vagrant/.bash_profile
 echo "JAVA_HOME: $JAVA_HOME"
 echo "PATH: $PATH"
 echo "configuring done."
@@ -99,5 +99,5 @@ if [ -f "/vagrant/webapp/CS183WebApplication.war" ]; then
   sudo cp /vagrant/webapp/CS183WebApplication.war /usr/local/tomcat7/webapps/
 fi
 
-sudo -E /usr/local/tomcat7/bin/shutdown.sh | tee /dev/null
-sudo -E /usr/local/tomcat7/bin/startup.sh | tee /dev/null
+sudo -E /usr/local/tomcat7/bin/shutdown.sh
+sudo -E /usr/local/tomcat7/bin/startup.sh
