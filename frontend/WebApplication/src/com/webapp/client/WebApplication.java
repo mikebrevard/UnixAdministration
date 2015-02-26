@@ -17,19 +17,26 @@ public class WebApplication implements EntryPoint {
 	public void onModuleLoad() {
 
 		// TODO:
-		// 1. Add in MySQL saving
 		// 2. Add in Appending to file (with date)
 
 		// example
-		// 127.0.0.1:8888/WebApplication.html?gwt.codesvr=127.0.0.1:9997&read=6&write=4
+		// http://127.0.0.1:8087/CS183WebApplication/?read=2&write=0
 		String read = Window.Location.getParameter("read");
 		String write = Window.Location.getParameter("write");
+		String update = Window.Location.getParameter("update");
 		String file = Window.Location.getParameter("file");
 		String auto = Window.Location.getParameter("auto");
 
+		if (read == null)
+			read = "1";
+		if (write == null)
+			write = "0";
+		if (update == null)
+			update = "0";
+
 		if (auto != null && auto.equals("off"))
-			Toolkit.loadWidget(new IntroductionPanel(read, write, file));
+			Toolkit.loadWidget(new IntroductionPanel(read, write, file, update));
 		else
-			Toolkit.loadWidget(new MainPanel(read, write, file));
+			Toolkit.loadWidget(new MainPanel(read, write, file, update));
 	}
 }

@@ -37,13 +37,10 @@ public class MySQLServiceImpl extends RemoteServiceServlet implements
 			e.printStackTrace();
 		}
 		try {
-			System.out.println("CONNECTION: ");
-			System.out.println("\t" + url + db);
-			System.out.println("\t" + user);
-			System.out.println("\t" + pass);
 			connection = DriverManager.getConnection(url + db, user, pass);
 		} catch (SQLException e) {
-			System.err.println("Mysql Connection Error: " + e.getLocalizedMessage());
+			System.err.println("Mysql Connection Error: "
+					+ e.getLocalizedMessage());
 			e.printStackTrace();
 		}
 
@@ -51,7 +48,6 @@ public class MySQLServiceImpl extends RemoteServiceServlet implements
 
 	@Override
 	public Results read(Results results) {
-
 		try {
 			if (connection == null)
 				initConnection();
@@ -65,14 +61,15 @@ public class MySQLServiceImpl extends RemoteServiceServlet implements
 		String query = "SELECT * FROM " + TABLE;
 
 		try {
-			 Statement select = connection.createStatement();
-			 ResultSet result = select.executeQuery(query);
-			  while (result.next()) {
-			  String s = result.getString(1);
-			  System.out.println("First column: " + s);
-			  }
-			 select.close();
-			 result.close();
+			Statement select = connection.createStatement();
+			ResultSet result = select.executeQuery(query);
+			while (result.next()) {
+				String s = result.getString(1);
+				// TODO: think if I want to do anything with this
+			}
+			select.close();
+			result.close();
+
 			connection.close();
 		} catch (SQLException e) {
 			results.setIsSuccessful(false);
@@ -86,10 +83,54 @@ public class MySQLServiceImpl extends RemoteServiceServlet implements
 	}
 
 	@Override
+	public Results update(Results results) {
+		// TODO:
+		// try {
+		// if (connection == null)
+		// initConnection();
+		// } catch (Exception e) {
+		// results.setIsSuccessful(false);
+		// results.setMessage("MySQL (updates connection): "
+		// + e.getLocalizedMessage());
+		// return results;
+		// }
+		//
+		// String query = "SELECT * FROM " + TABLE;
+		//
+		// try {
+		// Statement select = connection.createStatement();
+		// ResultSet result = select.executeQuery(query);
+		// while (result.next()) {
+		// String s = result.getString(1);
+		// // TODO: think if I want to do anything with this
+		// }
+		// select.close();
+		// result.close();
+		//
+		// connection.close();
+		// } catch (SQLException e) {
+		// results.setIsSuccessful(false);
+		// results.setMessage("MySQL (read): " + e.getLocalizedMessage());
+		// return results;
+		// } finally {
+		//
+		// }
+
+		results.setIsSuccessful(true);
+		results.setMessage("Made it to the end!");
+		return results;
+	}
+
+	@Override
 	public Results write() {
 		// TODO: randomize between INSERT and UPDATE
 
 		return null;
+	}
+
+	@Override
+	public String getIP() {
+		return getThreadLocalRequest().getLocalAddr();
 	}
 
 }

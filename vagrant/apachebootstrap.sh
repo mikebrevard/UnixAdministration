@@ -29,7 +29,7 @@ echo "=================================================================="
 sudo yum -y install haproxy
 
 echo "configuring haproxy configuration"
-cat /vagrant/etc/haproxy/haproxy.cfg >> /etc/haproxy/haproxy.cfg
+sudo cp /vagrant/etc/haproxy/haproxy.cfg /etc/haproxy/haproxy.cfg
 
 # haproxy services -- [ON]
 echo "starting haproxy"

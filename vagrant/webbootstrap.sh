@@ -84,7 +84,7 @@ if [ -f "/vagrant/webapp/CS183WebApplication.war" ]; then
   # first remove the webapp if it's there
   if [ -d "/usr/local/tomcat7/webapps/CS183WebApplication/" ]; then
     echo "removing cs183webaapp dir"
-    rm -rf /usr/local/tomcat7/webapps/CS183WebApplication/
+    sudo rm -rf /usr/local/tomcat7/webapps/CS183WebApplication/
   fi
   # remove the old war file
   echo "removing old war"
@@ -95,5 +95,5 @@ if [ -f "/vagrant/webapp/CS183WebApplication.war" ]; then
   sudo cp /vagrant/webapp/CS183WebApplication.war /usr/local/tomcat7/webapps/
 fi
 
-sudo -E /usr/local/tomcat7/bin/shutdown.sh | tee /dev/null
-sudo -E /usr/local/tomcat7/bin/startup.sh | tee /dev/null
+sudo -E /usr/local/tomcat7/bin/shutdown.sh
+sudo -E /usr/local/tomcat7/bin/startup.sh
