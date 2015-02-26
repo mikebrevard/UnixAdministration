@@ -99,5 +99,5 @@ if [ -f "/vagrant/webapp/CS183WebApplication.war" ]; then
   sudo cp /vagrant/webapp/CS183WebApplication.war /usr/local/tomcat7/webapps/
 fi
 
-sudo -E /usr/local/tomcat7/bin/shutdown.sh | tee /dev/null
-sudo -E /usr/local/tomcat7/bin/startup.sh | tee /dev/null
+sudo -E /usr/local/tomcat7/bin/shutdown.sh
+sudo -E /usr/local/tomcat7/bin/startup.sh
