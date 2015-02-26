@@ -1,6 +1,8 @@
 package com.webapp.client.userinterface.mainpage;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -39,8 +41,10 @@ public class MainPanel extends ResourceWidget {
 	private Integer writeCount = 0;
 	private Integer updateCount = 0;
 	private static String WIDTH = "95%";
+	private String filename;
 
-	public MainPanel(String read, String write, String file, String update) {
+	public MainPanel(String read, String write, String filename, String update) {
+		this.filename = filename;
 		this.read = Integer.valueOf(read);
 		this.write = Integer.valueOf(write);
 		this.update = Integer.valueOf(update);
@@ -100,7 +104,7 @@ public class MainPanel extends ResourceWidget {
 	private void saveStats() {
 		Results results = null;
 		for (int i = 0; i < read; i++) {
-			results = new Results(i, System.currentTimeMillis());
+			results = new Results(i, System.currentTimeMillis(), Constants.READ);
 			readResults[readCount] = results;
 			MySQL.read(results, readCallback);
 			readCount++;
@@ -110,11 +114,28 @@ public class MainPanel extends ResourceWidget {
 		 * for (int i = 0; i < write; i++) { MySQL.write(writeCallback); }
 		 */
 		for (int i = 0; i < update; i++) {
-			results = new Results(i, System.currentTimeMillis());
+			results = new Results(i, System.currentTimeMillis(),
+					Constants.UPDATE);
 			updateResults[updateCount] = results;
 			MySQL.update(results, updateCallback);
 			updateCount++;
 		}
+	}
+
+	private Boolean isLogReady() {
+		for (Results r : readResults) {
+			if (r == null || !r.isComplete())
+				return false;
+		}
+		for (Results r : writeResults) {
+			if (r == null)
+				return false;
+		}
+		for (Results r : updateResults) {
+			if (r == null)
+				return false;
+		}
+		return true;
 	}
 
 	private void display() {
@@ -168,7 +189,35 @@ public class MainPanel extends ResourceWidget {
 				i++;
 			}
 		}
+
+		if (isLogReady()) {
+			List<Results> allResults = new ArrayList<Results>();
+			addAll(allResults, readResults);
+
+			Date d = new Date();
+			MySQL.saveResults(filename, d.toString(), allResults, saveCallback);
+		}
 	}
+
+	private void addAll(List<Results> allResults, Results[] set) {
+		for (Results r : set)
+			allResults.add(r);
+	}
+
+	private AsyncCallback<Void> saveCallback = new AsyncCallback<Void>() {
+
+		@Override
+		public void onSuccess(Void result) {
+			// TODO Auto-generated method stub
+
+		}
+
+		@Override
+		public void onFailure(Throwable caught) {
+			// TODO Auto-generated method stub
+
+		}
+	};
 
 	private AsyncCallback<Results> updateCallback = new AsyncCallback<Results>() {
 

@@ -8,24 +8,19 @@ public class Results implements Serializable {
 
 	private Boolean isSuccessful;
 	private String message;
-	private Long timestamp;
 	private Long startTime;
 	private Long stopTime;
 	private Integer index;
+	private String testType;
 
-	Results() {
+	public Results() {
 
 	}
 
-	Results(Boolean isSuccessful, String message, Long timestamp) {
-		this.isSuccessful = isSuccessful;
-		this.message = message;
-		this.timestamp = timestamp;
-	}
-
-	public Results(Integer position, Long startTime) {
+	public Results(Integer position, Long startTime, String testType) {
 		this.startTime = startTime;
 		this.index = position;
+		this.testType = testType;
 	}
 
 	public Boolean getIsSuccessful() {
@@ -42,14 +37,6 @@ public class Results implements Serializable {
 
 	public void setMessage(String message) {
 		this.message = message;
-	}
-
-	public Long getTimestamp() {
-		return timestamp;
-	}
-
-	public void setTimestamp(Long timestamp) {
-		this.timestamp = timestamp;
 	}
 
 	public Long getStartTime() {
@@ -80,6 +67,14 @@ public class Results implements Serializable {
 		return stopTime - startTime;
 	}
 
+	public String getTestType() {
+		return testType;
+	}
+
+	public void setTestType(String testType) {
+		this.testType = testType;
+	}
+
 	public String format() {
 		String display;
 
@@ -89,5 +84,9 @@ public class Results implements Serializable {
 			display = "Something is wrong...";
 
 		return display;
+	}
+
+	public boolean isComplete() {
+		return (stopTime == null) ? false : true;
 	}
 }

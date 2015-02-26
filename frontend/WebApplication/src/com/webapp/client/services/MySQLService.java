@@ -1,5 +1,7 @@
 package com.webapp.client.services;
 
+import java.util.List;
+
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import com.webapp.shared.Results;
@@ -16,4 +18,6 @@ public interface MySQLService extends RemoteService {
 	Results update(Results results);
 
 	String getIP();
+
+	void saveResults(String filename, String date, List<Results> results);
 }
