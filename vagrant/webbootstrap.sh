@@ -57,7 +57,7 @@ export JAVA_HOME
 PATH=$JAVA_HOME/bin:$PATH
 export PATH
 
-echo "source /vagrant/etc/scripts/configjava.sh" >> /home/vagrant/.bash_profile
+# echo "source /vagrant/etc/scripts/configjava.sh" >> /home/vagrant/.bash_profile
 echo "JAVA_HOME: $JAVA_HOME"
 echo "PATH: $PATH"
 echo "configuring done."
