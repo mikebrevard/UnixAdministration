@@ -88,7 +88,7 @@ if [ -f "/vagrant/webapp/CS183WebApplication.war" ]; then
   # first remove the webapp if it's there
   if [ -d "/usr/local/tomcat7/webapps/CS183WebApplication/" ]; then
     echo "removing cs183webaapp dir"
-    rm -rf /usr/local/tomcat7/webapps/CS183WebApplication/
+    sudo rm -rf /usr/local/tomcat7/webapps/CS183WebApplication/
   fi
   # remove the old war file
   echo "removing old war"
