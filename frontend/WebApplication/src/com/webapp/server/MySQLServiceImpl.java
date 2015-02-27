@@ -15,6 +15,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
+import javax.servlet.ServletException;
+
+import org.apache.tomcat.jdbc.pool.DataSource;
+
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.webapp.client.services.MySQLService;
 import com.webapp.shared.Constants;
@@ -26,65 +30,38 @@ import com.webapp.shared.Results;
 @SuppressWarnings("serial")
 public class MySQLServiceImpl extends RemoteServiceServlet implements
 		MySQLService {
-	private Connection connection = null;
 	private final static String TABLE = "basicTable";
+	private static DataSource datasource = null;
 
-	private void initConnection() {
-
-		String url = "jdbc:mysql://192.168.50.3:3306/";
-		String db = "UnixTestDB";
-		String driver = "com.mysql.jdbc.Driver";
-		String user = "unixadmin";
-		String pass = "unixadmin";
-
-		try {
-			Class.forName(driver).newInstance();
-		} catch (InstantiationException e) {
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
-		try {
-			connection = DriverManager.getConnection(url + db, user, pass);
-		} catch (SQLException e) {
-			System.err.println("Mysql Connection Error: "
-					+ e.getLocalizedMessage());
-			e.printStackTrace();
-		}
-
+	@Override
+	public void init() throws ServletException {
+		super.init();
+		datasource = (DataSource) getServletContext()
+				.getAttribute("datasource");
 	}
 
 	@Override
 	public Results read(Results results) {
-		try {
-			if (connection == null)
-				initConnection();
-		} catch (Exception e) {
-			results.setIsSuccessful(false);
-			results.setMessage("MySQL (read connection): "
-					+ e.getLocalizedMessage());
-			return results;
-		}
+		Statement select = null;
+		ResultSet result = null;
+		Connection connection = null;
 
 		String query = "SELECT * FROM " + TABLE;
 
 		try {
-			Statement select = connection.createStatement();
-			ResultSet result = select.executeQuery(query);
+			connection = datasource.getConnection();
+			select = connection.createStatement();
+			result = select.executeQuery(query);
 			while (result.next()) {
 				String s = result.getString(1);
 				// TODO: think if I want to do anything with this
 			}
-			select.close();
-			result.close();
-
-			connection.close();
 		} catch (SQLException e) {
 			results.setIsSuccessful(false);
 			results.setMessage("MySQL (read): " + e.getLocalizedMessage());
 			return results;
+		} finally {
+			DataManagementServiceImpl.close(result, select, connection);
 		}
 
 		results.setIsSuccessful(true);
@@ -155,6 +132,8 @@ public class MySQLServiceImpl extends RemoteServiceServlet implements
 				numWrites++;
 			else if (r.getTestType().equals(Constants.UPDATE))
 				numUpdates++;
+			System.out.println("Status: " + r.getIsSuccessful() + "\tMessage: "
+					+ r.getMessage());
 		}
 
 		String data = date + "; Duration=" + totalTime + "ms; Number of Reads="

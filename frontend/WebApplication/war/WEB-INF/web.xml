@@ -5,6 +5,19 @@
 	version="2.5" xmlns="http://java.sun.com/xml/ns/javaee">
 
 	<!-- Servlets -->
+	<listener>
+		<listener-class>com.webapp.server.DataManagementServiceImpl</listener-class>
+	</listener>
+	<servlet>
+		<servlet-name>DataManagementService</servlet-name>
+		<servlet-class>com.webapp.server.DataManagementServiceImpl</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>DataManagementService</servlet-name>
+		<url-pattern>/webapplication/DataManagementService</url-pattern>
+	</servlet-mapping>
+
 	<servlet>
 		<servlet-name>MySQLService</servlet-name>
 		<servlet-class>com.webapp.server.MySQLServiceImpl</servlet-class>
