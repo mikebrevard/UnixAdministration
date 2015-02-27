@@ -15,6 +15,7 @@ frontend/WebApplication/war/webapplication/*
 frontend/WebApplication/war/CS183WebApplication.war
 frontend/WebApplication/war/WEB-INF/deploy/*
 frontend/WebApplication/war/WEB-INF/classes/*
+frontend/WebApplication/war/TestFiles
 
 RemoteSystemsTempFiles/
 
