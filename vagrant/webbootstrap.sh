@@ -66,7 +66,9 @@ if [ ! -d /usr/local/tomcat7 ]; then
   wget http://supergsego.com/apache/tomcat/tomcat-7/v7.0.59/bin/apache-tomcat-7.0.59.tar.gz >/dev/null 2>&1
   tar -xvf apache-tomcat-7.0.59.tar.gz > /dev/null
   sudo mkdir /usr/local/tomcat7
-  sudo mv /tmp/apache-tomcat-7.0.59/* /usr/local/tomcat7/
+  sudo mv /tmp/apache-tomcat-7.0.59/* $CATALINA_HOME/lib
+  echo "installing libs"
+  sudo mv vagrant/lib/* /usr/local/
 else
     echo "TOMCAT ALREADY INSTALLED"
 fi
