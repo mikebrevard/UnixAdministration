@@ -66,9 +66,9 @@ if [ ! -d /usr/local/tomcat7 ]; then
   wget http://supergsego.com/apache/tomcat/tomcat-7/v7.0.59/bin/apache-tomcat-7.0.59.tar.gz >/dev/null 2>&1
   tar -xvf apache-tomcat-7.0.59.tar.gz > /dev/null
   sudo mkdir /usr/local/tomcat7
-  sudo mv /tmp/apache-tomcat-7.0.59/* $CATALINA_HOME/lib
+  sudo mv /tmp/apache-tomcat-7.0.59/* /usr/local/tomcat7/
   echo "installing libs"
-  sudo mv vagrant/lib/* /usr/local/
+  sudo mv /vagrant/lib/* /usr/local/tomcat7/lib/
 else
     echo "TOMCAT ALREADY INSTALLED"
 fi
@@ -99,3 +99,11 @@ fi
 
 sudo -E /usr/local/tomcat7/bin/shutdown.sh
 sudo -E /usr/local/tomcat7/bin/startup.sh
+
+
+echo "deleting all the time"
+sudo rm -f /etc/localtime
+echo "linking real time"
+sudo ln -s /usr/share/zoneinfo/America/Los_Angeles /etc/localtime
+echo "Today is:"
+date
