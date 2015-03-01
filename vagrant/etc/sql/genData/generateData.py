@@ -24,7 +24,7 @@ SENTCOUNTMAX=3
 lockDisplay = threading.Lock()
 
 ####### SQL Create resources #######
-mysqlf = open("create.sql", "w")
+mysqlf = open("create.dat", "w")
 schemaList=[]
 
 ####### Data Generation methods #######
@@ -101,8 +101,8 @@ def generateData( fileName, tid ):
     print(str(tid) + ': 100% == [DONE ' + str(tid) + ']')
     f.close()
 
-def addSqlCreate( schemaStr ):
-    mysqlf.write("test\n");
+def addSqlCreate( num, schemaStr ):
+    mysqlf.write(str(num) + ': ' + schemaStr + '\n')
     #for entry in schemaStr.split("\t"):
     #sqlf.write('CREATE TABLE ' + tableName + '\n(')
     #sqlf.write('\n);');
@@ -137,7 +137,7 @@ def main(argv):
     for num in range(len(schemaList)):
         #print('Schema: ' + schemaList[num])
         #print(convertToSQL(schemaList[num]))
-        addSqlCreate(schemaList[num])
+        addSqlCreate(num, schemaList[num])
     mysqlf.close();
 
 if __name__ == "__main__":
