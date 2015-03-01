@@ -1,15 +1,9 @@
 package com.webapp.server;
 
 import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -47,13 +41,12 @@ public class MySQLServiceImpl extends RemoteServiceServlet implements
 		Connection connection = null;
 
 		String query = "SELECT * FROM " + TABLE;
-
 		try {
 			connection = datasource.getConnection();
 			select = connection.createStatement();
 			result = select.executeQuery(query);
 			while (result.next()) {
-				String s = result.getString(1);
+				// String s = result.getString(1);
 				// TODO: think if I want to do anything with this
 			}
 		} catch (SQLException e) {
@@ -71,37 +64,23 @@ public class MySQLServiceImpl extends RemoteServiceServlet implements
 
 	@Override
 	public Results update(Results results) {
-		// TODO:
-		// try {
-		// if (connection == null)
-		// initConnection();
-		// } catch (Exception e) {
-		// results.setIsSuccessful(false);
-		// results.setMessage("MySQL (updates connection): "
-		// + e.getLocalizedMessage());
-		// return results;
-		// }
-		//
-		// String query = "SELECT * FROM " + TABLE;
-		//
-		// try {
-		// Statement select = connection.createStatement();
-		// ResultSet result = select.executeQuery(query);
-		// while (result.next()) {
-		// String s = result.getString(1);
-		// // TODO: think if I want to do anything with this
-		// }
-		// select.close();
-		// result.close();
-		//
-		// connection.close();
-		// } catch (SQLException e) {
-		// results.setIsSuccessful(false);
-		// results.setMessage("MySQL (read): " + e.getLocalizedMessage());
-		// return results;
-		// } finally {
-		//
-		// }
+		Statement select = null;
+		ResultSet result = null;
+		Connection connection = null;
+
+		String sql = "UPDATE " + TABLE + " SET " + UserSimulator.randomUpdate()
+				+ " WHERE id=" + UserSimulator.getRowNumber();
+		try {
+			connection = datasource.getConnection();
+			select = connection.createStatement();
+			select.executeUpdate(sql);
+		} catch (SQLException e) {
+			results.setIsSuccessful(false);
+			results.setMessage("MySQL (update): " + e.getLocalizedMessage());
+			return results;
+		} finally {
+			DataManagementServiceImpl.close(result, select, connection);
+		}
 
 		results.setIsSuccessful(true);
 		results.setMessage("Made it to the end!");
@@ -109,10 +88,27 @@ public class MySQLServiceImpl extends RemoteServiceServlet implements
 	}
 
 	@Override
-	public Results write() {
-		// TODO: randomize between INSERT and UPDATE
+	public Results write(Results results) {
+		Statement select = null;
+		ResultSet result = null;
+		Connection connection = null;
 
-		return null;
+		String sql = "INSERT INTO " + TABLE + " " + UserSimulator.randomWrite();
+		try {
+			connection = datasource.getConnection();
+			select = connection.createStatement();
+			select.executeUpdate(sql);
+		} catch (SQLException e) {
+			results.setIsSuccessful(false);
+			results.setMessage("MySQL (write): " + e.getLocalizedMessage());
+			return results;
+		} finally {
+			DataManagementServiceImpl.close(result, select, connection);
+		}
+
+		results.setIsSuccessful(true);
+		results.setMessage("Made it to the end!");
+		return results;
 	}
 
 	@Override

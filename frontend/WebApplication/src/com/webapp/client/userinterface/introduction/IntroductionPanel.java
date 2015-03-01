@@ -1,7 +1,5 @@
 package com.webapp.client.userinterface.introduction;
 
-import org.apache.log4j.Logger;
-
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -22,8 +20,6 @@ public class IntroductionPanel extends ResourceWidget {
 
 	private static IntroductionPanelUiBinder uiBinder = GWT
 			.create(IntroductionPanelUiBinder.class);
-
-	private static Logger logger = Logger.getLogger(IntroductionPanel.class);
 
 	interface IntroductionPanelUiBinder extends
 			UiBinder<Widget, IntroductionPanel> {

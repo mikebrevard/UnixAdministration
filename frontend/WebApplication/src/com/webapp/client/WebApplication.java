@@ -16,9 +16,6 @@ public class WebApplication implements EntryPoint {
 	 */
 	public void onModuleLoad() {
 
-		// TODO:
-		// 2. Add in Appending to file (with date)
-
 		// example
 		// http://127.0.0.1:8087/CS183WebApplication/?read=2&write=0
 		String read = Window.Location.getParameter("read");
