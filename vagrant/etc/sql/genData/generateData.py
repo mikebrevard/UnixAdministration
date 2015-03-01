@@ -20,9 +20,12 @@ TABLESIZEMAX=20
 SENTCOUNTMIN=1
 SENTCOUNTMAX=3
 
-######## SQL WRITE FILE ########
-sqlf = open("create.sql", 'w')
-tablenum = 0
+#locks
+lockDisplay = threading.Lock()
+
+####### SQL Create resources #######
+mysqlf = open("create.sql", "w")
+schemaList=[]
 
 ####### Data Generation methods #######
 # this colOpt enum is used to generate the right string based on
@@ -51,7 +54,12 @@ colOpt = {  0 : genName,
             8 : genLorem,
             9 : genLorem,
             10: genLorem }
-
+colTypes = { "genName" : "",
+          "genAddress" : "",
+          "genNumber" : "",
+          "genEmail" : "",
+          "genTitle" : "",
+          "genLorem" : "" }
 
 # generates the string for one row.
 def generateRow(colType, num):
@@ -60,62 +68,77 @@ def generateRow(colType, num):
         rowStr += ', ' + colOpt[colType[num]]();
     return rowStr
 
-def generateData( fileName ):
+def generateData( fileName, tid ):
     # These bounds are defined above
     numCols = randint(NUMCOLSMIN, NUMCOLSMAX)
     tableSize = randint(TABLESIZEMIN, TABLESIZEMAX)
     tableSize = tableSize * 100
     f = open(fileName, 'w')
-    print ('###############################################')
-    print ('File name: ', fileName)
-    print ('Generating ', numCols, ' rows of data.')
-    print ('tableSize  ', tableSize, '.')
-    print
+    with lockDisplay:
+        print ( str(tid) + ': ###############################################\n'+str(tid) + ': File name: ', fileName+'\n'+str(tid) + ': Generating ', numCols, ' rows of data.'+'\n'+str(tid) + ': tableSize  ', tableSize, '.'+'\n'+str(tid) + ': ###############################################')
+        print
+
     # Creating array of enums for columnTypes
-    print ('Schema ordering: ')
     columnTypes=[0]*numCols;
-    print ('id column')
+    schemastr = ''
     for entryIndex in range(len(columnTypes)):
         columnTypes[entryIndex]=randint(0,COLOPTMAX)
-        print (colOpt[columnTypes[entryIndex]].__name__)
-    print
-    #generate $tableSize rows
-    sys.stdout.write('PROGRESS [ ')
-    sys.stdout.flush()
+        #print (str(tid) + ': ' + colOpt[columnTypes[entryIndex]].__name__)
+        schemastr = schemastr + colOpt[columnTypes[entryIndex]].__name__ + '\t'
+    schemaList[tid] = schemastr
+
+    #generate $tableSize rows of data
     for num in range(0,tableSize):
         if num % (tableSize/10) == 0:
-            #print ((num/(tableSize/10)) * 10, '%')
-            sys.stdout.write(str((num/(tableSize/10))*10) + '% == ')
-            sys.stdout.flush()
+            print (str(tid) + ": " + str((num/(tableSize/10)) * 10) + '%')
         rowData=""
         # generate the row data
         for i in range(0, numCols):
             rowData=generateRow(columnTypes, num)
         rowData = rowData + '\n'
-        # print ('[', num, ']: ', rowData)
         f.write(rowData)
-    #print('100%    --      [DONE]')
-    sys.stdout.write('100% ] -- [DONE]\n')
-    sys.stdout.flush()
 
+    print(str(tid) + ': 100% == [DONE ' + str(tid) + ']')
     f.close()
+
+def addSqlCreate( schemaStr ):
+    mysqlf.write("test\n");
+    #for entry in schemaStr.split("\t"):
+    #sqlf.write('CREATE TABLE ' + tableName + '\n(')
+    #sqlf.write('\n);');
+    #sqlf.close();
+    return '';
+
 
 def main(argv):
     numFiles = input('Enter number of files to generate: ')
     tableName = input('Enter the name of the table: ')
+    threads=[]
     print ('Generating ', numFiles, ' files!')
     print ('Hold on to your pants.')
 
+    ####################################################### GENERATE DATA
     numFiles=int(numFiles)
     for num in range(0,numFiles):
         file="data"+str(num)+".csv"
-        generateData(file)
+        t=threading.Thread(target=generateData, args=(file, num))
+        threads.append(t)
+        schemaList.append('')
+        t.start()
+        #generateData(file)
     else:
         print
         print ('Generated ', numFiles, ' files.')
+    for num in range(len(threads)):
+        threads[num].join()
+        print( '+ ' + str(num) +' is Finished')
+    ############################################################ GENERATE
 
-#sqlf.write('CREATE TABLE ' + tableName + '\n(')
-#sqlf.write('\n);');
-#sqlf.close();
+    for num in range(len(schemaList)):
+        #print('Schema: ' + schemaList[num])
+        #print(convertToSQL(schemaList[num]))
+        addSqlCreate(schemaList[num])
+    mysqlf.close();
+
 if __name__ == "__main__":
     main(sys.argv[1:])
