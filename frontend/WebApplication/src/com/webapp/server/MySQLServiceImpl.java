@@ -58,7 +58,6 @@ public class MySQLServiceImpl extends RemoteServiceServlet implements
 		}
 
 		results.setIsSuccessful(true);
-		results.setMessage("Made it to the end!");
 		return results;
 	}
 
@@ -83,7 +82,6 @@ public class MySQLServiceImpl extends RemoteServiceServlet implements
 		}
 
 		results.setIsSuccessful(true);
-		results.setMessage("Made it to the end!");
 		return results;
 	}
 
@@ -107,7 +105,6 @@ public class MySQLServiceImpl extends RemoteServiceServlet implements
 		}
 
 		results.setIsSuccessful(true);
-		results.setMessage("Made it to the end!");
 		return results;
 	}
 

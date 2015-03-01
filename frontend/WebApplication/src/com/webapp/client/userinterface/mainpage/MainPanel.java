@@ -64,6 +64,7 @@ public class MainPanel extends ResourceWidget {
 				HasHorizontalAlignment.ALIGN_RIGHT);
 		topBar.setCellHorizontalAlignment(statusDisplay,
 				HasHorizontalAlignment.ALIGN_LEFT);
+		resultsDisplay.setWidth(WIDTH);
 		resultsDisplay.setCellHorizontalAlignment(readDisplay,
 				HasHorizontalAlignment.ALIGN_LEFT);
 		resultsDisplay.setCellHorizontalAlignment(writeDisplay,
@@ -227,8 +228,7 @@ public class MainPanel extends ResourceWidget {
 			updateResults[result.getIndex()] = result;
 			display();
 
-			String text = (result.getIsSuccessful()) ? "Pass (Update)"
-					: "Fail (Update)";
+			String text = (result.getIsSuccessful()) ? "Pass" : "Fail";
 			header.setText(text);
 			results.setText(result.getMessage());
 		}
@@ -248,8 +248,7 @@ public class MainPanel extends ResourceWidget {
 			readResults[result.getIndex()] = result;
 			display();
 
-			String text = (result.getIsSuccessful()) ? "Pass (Read)"
-					: "Fail (Read)";
+			String text = (result.getIsSuccessful()) ? "Pass" : "Fail";
 			header.setText(text);
 			results.setText(result.getMessage());
 		}
@@ -269,8 +268,7 @@ public class MainPanel extends ResourceWidget {
 			writeResults[result.getIndex()] = result;
 			display();
 
-			String text = (result.getIsSuccessful()) ? "Pass (Write)"
-					: "Fail (Write)";
+			String text = (result.getIsSuccessful()) ? "Pass" : "Fail";
 			header.setText(text);
 			results.setText(result.getMessage());
 		}
