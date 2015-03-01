@@ -11,8 +11,8 @@ NUMCOLSMAX=24
 
 # total number of rows rand ( size of the table )
 # Will be multilied by 100 later on
-TABLESIZEMIN=550
-TABLESIZEMAX=650
+TABLESIZEMIN=800
+TABLESIZEMAX=850
 
 
 #randomized sentence min and max for lorem sentences
@@ -65,23 +65,23 @@ def generateData( fileName ):
     f = open(fileName, 'w')
 
     print
-    print 'File name: ', fileName
-    print 'Generating ', numCols, ' rows of data.'
-    print 'tableSize  ', tableSize, '.'
+    print ('File name: ', fileName)
+    print ('Generating ', numCols, ' rows of data.')
+    print ('tableSize  ', tableSize, '.')
 
     # Creating array of enums for columnTypes
-    print 'Schema ordering: '
+    print ('Schema ordering: ')
     columnTypes=[0]*numCols;
-    print 'id column'
+    print ('id column')
     for entryIndex in range(len(columnTypes)):
         columnTypes[entryIndex]=randint(0,COLOPTMAX)
-        print colOpt[columnTypes[entryIndex]].__name__
+        print (colOpt[columnTypes[entryIndex]].__name__)
     print
 
     #generate $tableSize rows
     for num in range(0,tableSize):
         if num % (tableSize/10) == 0:
-            print (num/(tableSize/10)) * 10, '%'
+            print ((num/(tableSize/10)) * 10, '%')
         rowData=""
         # generate the row data
         for i in range(0, numCols):
@@ -89,12 +89,13 @@ def generateData( fileName ):
         # print '[', num, ']: ', rowData
         f.write(rowData)
 
+    print ('100%')
     f.close()
 def main(argv):
     numFiles = input('Enter number of files to generate: ')
 
-    print 'Generating ', numFiles, ' files!'
-    print 'Hold on to your pants.'
+    print ('Generating ', numFiles, ' files!')
+    print ('Hold on to your pants.')
 
     numFiles=int(numFiles)
     for num in range(0,numFiles):
@@ -103,7 +104,7 @@ def main(argv):
 
     else:
         print
-        print 'Generated ', numFiles, ' files.'
+        print ('Generated ', numFiles, ' files.')
 
 if __name__ == "__main__":
     main(sys.argv[1:])

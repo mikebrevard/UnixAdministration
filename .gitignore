@@ -3,6 +3,7 @@
 *.prefs
 *.class
 *.arff
+*.csv
 
 frontend/WebApplication/.settings/com.google.gdt.eclipse.core.prefs
 frontend/WebApplication/.gwt
