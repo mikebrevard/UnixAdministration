@@ -112,7 +112,6 @@ def addSqlCreate( num, schemaStr ):
 
 def main(argv):
     numFiles = input('Enter number of files to generate: ')
-    tableName = input('Enter the name of the table: ')
     threads=[]
     print ('Generating ', numFiles, ' files!')
     print ('Hold on to your pants.')
