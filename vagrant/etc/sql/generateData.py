@@ -10,7 +10,7 @@ NUMCOLSMIN=5
 NUMCOLSMAX=24
 
 # total number of rows rand ( size of the table )
-# Will be multiplied by 100 later on
+# Will be multilied by 100 later on
 TABLESIZEMIN=550
 TABLESIZEMAX=650
 
@@ -89,7 +89,7 @@ def generateData( fileName ):
         # print '[', num, ']: ', rowData
         f.write(rowData)
 
-    f.lose()
+    f.close()
 def main(argv):
     numFiles = input('Enter number of files to generate: ')
 
