@@ -1,27 +1,26 @@
 
-import sys, getopt, random
+import sys, getopt, random, threading
 from random import randint
 
 import forgery_py
 
-#### CONFIGURATION GLOBAL VARIABLES
+######## CONFIGURATION GLOBAL VARIABLES #########
 # total number of columns rand
 NUMCOLSMIN=5
 NUMCOLSMAX=24
 
 # total number of rows rand ( size of the table )
 # Will be multilied by 100 later on
-TABLESIZEMIN=800
-TABLESIZEMAX=850
-
+# normally set to 500-5 000
+# for debug set to 1 - 10
+TABLESIZEMIN=1
+TABLESIZEMAX=2
 
 #randomized sentence min and max for lorem sentences
 SENTCOUNTMIN=1
 SENTCOUNTMAX=3
 
-# switch function trickery
-# http://bytebaker.com/2008/11/03/switch-case-statement-in-python/
-
+####### Data Generation methods #######
 # this colOpt enum is used to generate the right string based on
 # the number provided to it. To call, use colOpt[func#]()
 def genName():
@@ -36,6 +35,7 @@ def genTitle():
     return forgery_py.lorem_ipsum.title()
 def genLorem():
     return forgery_py.forgery.lorem_ipsum.sentences(quantity=randint(SENTCOUNTMIN,SENTCOUNTMAX), as_list=False)
+COLOPTMAX=10
 colOpt = {  0 : genName,
             1 : genAddress,
             2 : genNumber,
@@ -46,15 +46,14 @@ colOpt = {  0 : genName,
             7 : genLorem,
             8 : genLorem,
             9 : genLorem,
-            10: genLorem}
-COLOPTMAX=10
+            10: genLorem }
+
 
 # generates the string for one row.
 def generateRow(colType, num):
     rowStr=str(num)
     for num in range(len(colType)):
         rowStr += ', ' + colOpt[colType[num]]();
-
     return rowStr
 
 def generateData( fileName ):
@@ -63,12 +62,11 @@ def generateData( fileName ):
     tableSize = randint(TABLESIZEMIN, TABLESIZEMAX)
     tableSize = tableSize * 100
     f = open(fileName, 'w')
-
-    print
+    print ('###############################################')
     print ('File name: ', fileName)
     print ('Generating ', numCols, ' rows of data.')
     print ('tableSize  ', tableSize, '.')
-
+    print
     # Creating array of enums for columnTypes
     print ('Schema ordering: ')
     columnTypes=[0]*numCols;
@@ -77,7 +75,6 @@ def generateData( fileName ):
         columnTypes[entryIndex]=randint(0,COLOPTMAX)
         print (colOpt[columnTypes[entryIndex]].__name__)
     print
-
     #generate $tableSize rows
     for num in range(0,tableSize):
         if num % (tableSize/10) == 0:
@@ -86,11 +83,12 @@ def generateData( fileName ):
         # generate the row data
         for i in range(0, numCols):
             rowData=generateRow(columnTypes, num)
-        # print '[', num, ']: ', rowData
+        rowData = rowData + '\n'
+        # print ('[', num, ']: ', rowData)
         f.write(rowData)
-
-    print ('100%')
+    print ('100.0%    --   [ DONE ]')
     f.close()
+
 def main(argv):
     numFiles = input('Enter number of files to generate: ')
 
@@ -101,7 +99,6 @@ def main(argv):
     for num in range(0,numFiles):
         file="data"+str(num)+".csv"
         generateData(file)
-
     else:
         print
         print ('Generated ', numFiles, ' files.')
