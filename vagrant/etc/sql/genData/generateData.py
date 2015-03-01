@@ -13,12 +13,16 @@ NUMCOLSMAX=24
 # Will be multilied by 100 later on
 # normally set to 500-5 000
 # for debug set to 1 - 10
-TABLESIZEMIN=1
-TABLESIZEMAX=2
+TABLESIZEMIN=10
+TABLESIZEMAX=20
 
 #randomized sentence min and max for lorem sentences
 SENTCOUNTMIN=1
 SENTCOUNTMAX=3
+
+######## SQL WRITE FILE ########
+sqlf = open("create.sql", 'w')
+tablenum = 0
 
 ####### Data Generation methods #######
 # this colOpt enum is used to generate the right string based on
@@ -76,9 +80,13 @@ def generateData( fileName ):
         print (colOpt[columnTypes[entryIndex]].__name__)
     print
     #generate $tableSize rows
+    sys.stdout.write('PROGRESS [ ')
+    sys.stdout.flush()
     for num in range(0,tableSize):
         if num % (tableSize/10) == 0:
-            print ((num/(tableSize/10)) * 10, '%')
+            #print ((num/(tableSize/10)) * 10, '%')
+            sys.stdout.write(str((num/(tableSize/10))*10) + '% == ')
+            sys.stdout.flush()
         rowData=""
         # generate the row data
         for i in range(0, numCols):
@@ -86,12 +94,15 @@ def generateData( fileName ):
         rowData = rowData + '\n'
         # print ('[', num, ']: ', rowData)
         f.write(rowData)
-    print ('100.0%    --   [ DONE ]')
+    #print('100%    --      [DONE]')
+    sys.stdout.write('100% ] -- [DONE]\n')
+    sys.stdout.flush()
+
     f.close()
 
 def main(argv):
     numFiles = input('Enter number of files to generate: ')
-
+    tableName = input('Enter the name of the table: ')
     print ('Generating ', numFiles, ' files!')
     print ('Hold on to your pants.')
 
@@ -103,5 +114,8 @@ def main(argv):
         print
         print ('Generated ', numFiles, ' files.')
 
+#sqlf.write('CREATE TABLE ' + tableName + '\n(')
+#sqlf.write('\n);');
+#sqlf.close();
 if __name__ == "__main__":
     main(sys.argv[1:])
