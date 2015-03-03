@@ -32,11 +32,12 @@ public class WebApplication implements EntryPoint {
 		if (update == null)
 			update = "0";
 
+		Toolkit.loadWidgetResults(new HTMLPanel("<p>Web Application</p>"));
+
 		if (auto != null && auto.equals("off"))
 			Toolkit.loadWidget(new IntroductionPanel(read, write, file, update));
 		else
 			Toolkit.loadWidget(new MainPanel(read, write, file, update));
 
-		Toolkit.loadWidgetResults(new HTMLPanel("<p>Web Application</p>"));
 	}
 }
