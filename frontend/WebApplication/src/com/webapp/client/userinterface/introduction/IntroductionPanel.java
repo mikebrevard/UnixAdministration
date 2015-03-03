@@ -32,6 +32,10 @@ public class IntroductionPanel extends ResourceWidget {
 		reads.setText(read);
 		writes.setText(write);
 		updates.setText(update);
+		reads.getElement().setId(Constants.READ);
+		writes.getElement().setId(Constants.WRITE);
+		updates.getElement().setId(Constants.UPDATE);
+		submit.getElement().setId("submit");
 
 		if (file != null)
 			filePath.setText(file);

@@ -11,7 +11,7 @@ echo 'Remove Test Files'
 rm -f TestFiles/*
 
 echo 'Compress files'
-zip -r CS183WebApplication.war favicon.ico webapplication/ WebApplication.html WebApplication.css WEB-INF/ TestFiles/ -x 'logs/*.log'
+zip -r CS183WebApplication.war favicon.ico webapplication/ WebApplication.html WebApplication.css WEB-INF/ -x 'logs/*.log'
 
 # echo 'Move .zip'
 # rm -rf ../../../vagrant/webapp/*

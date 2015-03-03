@@ -40,7 +40,8 @@ public class MySQLServiceImpl extends RemoteServiceServlet implements
 		ResultSet result = null;
 		Connection connection = null;
 
-		String query = "SELECT * FROM " + TABLE;
+		String query = "SELECT * FROM " + TABLE + " WHERE id="
+				+ UserSimulator.getRowNumber();
 		try {
 			connection = datasource.getConnection();
 			select = connection.createStatement();
@@ -125,8 +126,6 @@ public class MySQLServiceImpl extends RemoteServiceServlet implements
 				numWrites++;
 			else if (r.getTestType().equals(Constants.UPDATE))
 				numUpdates++;
-			System.out.println("Status: " + r.getIsSuccessful() + "\tMessage: "
-					+ r.getMessage());
 		}
 
 		String data = date + "; Duration=" + totalTime + "ms; Number of Reads="
@@ -139,8 +138,7 @@ public class MySQLServiceImpl extends RemoteServiceServlet implements
 		BufferedWriter bw = null;
 
 		try {
-			bw = new BufferedWriter(new FileWriter("TestFiles/" + filename
-					+ ".txt", true));
+			bw = new BufferedWriter(new FileWriter(filename + ".txt", true));
 			bw.write(data);
 			bw.newLine();
 			bw.flush();
