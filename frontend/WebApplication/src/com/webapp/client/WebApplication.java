@@ -2,7 +2,6 @@ package com.webapp.client;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.ui.HTMLPanel;
 import com.webapp.client.userinterface.introduction.IntroductionPanel;
 import com.webapp.client.userinterface.mainpage.MainPanel;
 import com.webapp.client.userinterface.utilities.Toolkit;
@@ -18,6 +17,7 @@ public class WebApplication implements EntryPoint {
 	public void onModuleLoad() {
 
 		// example
+		// http://127.0.0.1:8800/CS183WebApplication/?read=100&write=100&update=100
 		// http://127.0.0.1:8087/CS183WebApplication/?read=2&write=0
 		String read = Window.Location.getParameter("read");
 		String write = Window.Location.getParameter("write");
@@ -31,8 +31,6 @@ public class WebApplication implements EntryPoint {
 			write = "0";
 		if (update == null)
 			update = "0";
-
-		Toolkit.loadWidgetResults(new HTMLPanel("<p>Web Application</p>"));
 
 		if (auto != null && auto.equals("off"))
 			Toolkit.loadWidget(new IntroductionPanel(read, write, file, update));
