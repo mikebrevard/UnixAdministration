@@ -203,8 +203,7 @@ public class MainPanel extends ResourceWidget {
 			addAll(allResults, readResults);
 
 			Date d = new Date();
-			// MySQL.saveResults(filename, d.toString(), allResults,
-			// saveCallback);
+			MySQL.saveResults(filename, d.toString(), allResults, saveCallback);
 		}
 	}
 
