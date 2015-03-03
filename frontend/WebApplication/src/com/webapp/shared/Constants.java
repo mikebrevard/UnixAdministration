@@ -2,7 +2,7 @@ package com.webapp.shared;
 
 public class Constants {
 
-	public final static String VERSION = "Version 1.8";
+	public final static String VERSION = "Version 1.9";
 
 	public final static String READ = "read";
 	public final static String WRITE = "write";
