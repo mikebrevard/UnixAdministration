@@ -5,14 +5,15 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.webapp.client.userinterface.ResourceWidget;
-import com.webapp.client.userinterface.mainpage.MainPanel;
 import com.webapp.client.userinterface.utilities.Toolkit;
 import com.webapp.shared.Constants;
 
@@ -28,6 +29,9 @@ public class IntroductionPanel extends ResourceWidget {
 	public IntroductionPanel(String read, String write, String file,
 			String update) {
 		initWidget(uiBinder.createAndBindUi(this));
+		
+		Toolkit.loadWidgetResults(new HTMLPanel("<p>Introduction Page</p>"));
+		
 		version.setText(Constants.VERSION);
 		reads.setText(read);
 		writes.setText(write);
@@ -35,6 +39,7 @@ public class IntroductionPanel extends ResourceWidget {
 		reads.getElement().setId(Constants.READ);
 		writes.getElement().setId(Constants.WRITE);
 		updates.getElement().setId(Constants.UPDATE);
+		filePath.getElement().setId("file");
 		submit.getElement().setId("submit");
 
 		if (file != null)
@@ -51,36 +56,15 @@ public class IntroductionPanel extends ResourceWidget {
 				execute();
 			}
 		});
-		//
-		// // Simple messages
-		// logger.trace("A message at trace level.");
-		// logger.debug("A message at debug level.");
-		// logger.info("A message at info level.");
-		// logger.warn("A message at warn level.");
-		//
-		// // Logging exceptions
-		// try {
-		// Integer.parseInt("Hallo");
-		// } catch (NumberFormatException e) {
-		// logger.error("Parsing the number failed", e);
-		// }
-		//
-		// // nested diagnostic context
-		// NDC.push("ndc1");
-		// NDC.push("ndc2");
-		// logger.info("Test for the NDC.");
-		// NDC.clear();
-		//
-		// // mapped diagnostic context
-		// MDC.put("key1", "value1");
-		// MDC.put("key2", "value2");
-		// logger.info("Test for the MDC.");
-		// MDC.clear();
 	}
 
 	private void execute() {
-		Toolkit.loadWidget(new MainPanel(reads.getText(), writes.getText(),
-				filePath.getText(), updates.getText()));
+		Window.open(
+				"http://127.0.0.1:8087/CS183WebApplication/?read="
+						+ reads.getText() + "&write=" + writes.getText()
+						+ "&update=" + updates.getText(), "_self", null);
+		// Toolkit.loadWidget(new MainPanel(reads.getText(), writes.getText(),
+		// filePath.getText(), updates.getText()));
 	}
 
 	@UiField

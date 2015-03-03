@@ -8,6 +8,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
@@ -17,6 +18,7 @@ import com.webapp.client.services.MySQLService;
 import com.webapp.client.services.MySQLServiceAsync;
 import com.webapp.client.userinterface.ResourceWidget;
 import com.webapp.client.userinterface.resources.Resources;
+import com.webapp.client.userinterface.utilities.Toolkit;
 import com.webapp.shared.Constants;
 import com.webapp.shared.Results;
 
@@ -53,6 +55,8 @@ public class MainPanel extends ResourceWidget {
 		updateResults = new Results[this.update];
 
 		initWidget(uiBinder.createAndBindUi(this));
+		
+		Toolkit.loadWidgetResults(new HTMLPanel("<p>Results Page</p>"));
 
 		// formatting
 		resultsDisplay.setSpacing(10);
@@ -199,7 +203,8 @@ public class MainPanel extends ResourceWidget {
 			addAll(allResults, readResults);
 
 			Date d = new Date();
-			MySQL.saveResults(filename, d.toString(), allResults, saveCallback);
+			// MySQL.saveResults(filename, d.toString(), allResults,
+			// saveCallback);
 		}
 	}
 
