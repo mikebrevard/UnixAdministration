@@ -64,6 +64,15 @@ public class Results implements Serializable {
 	}
 
 	public Long getDuration() {
+		if (startTime == null || stopTime == null) {
+			if (startTime == null)
+				startTime = System.currentTimeMillis();
+			if (stopTime == null)
+				stopTime = System.currentTimeMillis();
+			setIsSuccessful(false);
+			setMessage("getDuration() called too early");
+		}
+
 		return stopTime - startTime;
 	}
 

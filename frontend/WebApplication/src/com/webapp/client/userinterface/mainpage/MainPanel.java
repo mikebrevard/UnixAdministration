@@ -53,7 +53,7 @@ public class MainPanel extends ResourceWidget {
 		updateResults = new Results[this.update];
 
 		initWidget(uiBinder.createAndBindUi(this));
-		
+
 		// formatting
 		resultsDisplay.setSpacing(10);
 		resultsDisplay.setWidth(WIDTH);
@@ -132,11 +132,11 @@ public class MainPanel extends ResourceWidget {
 				return false;
 		}
 		for (Results r : writeResults) {
-			if (r == null)
+			if (r == null || !r.isComplete())
 				return false;
 		}
 		for (Results r : updateResults) {
-			if (r == null)
+			if (r == null || !r.isComplete())
 				return false;
 		}
 		return true;
@@ -197,6 +197,8 @@ public class MainPanel extends ResourceWidget {
 		if (isLogReady()) {
 			List<Results> allResults = new ArrayList<Results>();
 			addAll(allResults, readResults);
+			addAll(allResults, writeResults);
+			addAll(allResults, updateResults);
 
 			Date d = new Date();
 			MySQL.saveResults(filename, d.toString(), allResults, saveCallback);

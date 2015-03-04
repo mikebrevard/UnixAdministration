@@ -118,6 +118,7 @@ public class MySQLServiceImpl extends RemoteServiceServlet implements
 	public void saveResults(String filename, String date, List<Results> results) {
 		Long totalTime = 0L;
 		Integer numReads = 0, numWrites = 0, numUpdates = 0;
+		String status = "";
 		for (Results r : results) {
 			totalTime += r.getDuration();
 			if (r.getTestType().equals(Constants.READ))
@@ -126,11 +127,16 @@ public class MySQLServiceImpl extends RemoteServiceServlet implements
 				numWrites++;
 			else if (r.getTestType().equals(Constants.UPDATE))
 				numUpdates++;
+			if (!r.getIsSuccessful())
+				status = "Fail";
 		}
+
+		if (status.isEmpty())
+			status = "Pass";
 
 		String data = date + "; Duration=" + totalTime + "ms; Number of Reads="
 				+ numReads + "; Number of Writes=" + numWrites
-				+ "; Number of Updates=" + numUpdates;
+				+ "; Number of Updates=" + numUpdates + "; Status=" + status;
 
 		if (filename == null || filename.isEmpty())
 			filename = "unnamedtest";
