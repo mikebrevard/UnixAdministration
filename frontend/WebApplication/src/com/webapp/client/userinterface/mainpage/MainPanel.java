@@ -54,6 +54,7 @@ public class MainPanel extends ResourceWidget {
 
 		initWidget(uiBinder.createAndBindUi(this));
 
+		// formatting
 		resultsDisplay.setSpacing(10);
 		resultsDisplay.setWidth(WIDTH);
 		ipDisplay.setSpacing(5);
@@ -63,6 +64,7 @@ public class MainPanel extends ResourceWidget {
 				HasHorizontalAlignment.ALIGN_RIGHT);
 		topBar.setCellHorizontalAlignment(statusDisplay,
 				HasHorizontalAlignment.ALIGN_LEFT);
+		resultsDisplay.setWidth(WIDTH);
 		resultsDisplay.setCellHorizontalAlignment(readDisplay,
 				HasHorizontalAlignment.ALIGN_LEFT);
 		resultsDisplay.setCellHorizontalAlignment(writeDisplay,
@@ -70,24 +72,17 @@ public class MainPanel extends ResourceWidget {
 		resultsDisplay.setCellHorizontalAlignment(updateDisplay,
 				HasHorizontalAlignment.ALIGN_RIGHT);
 
+		// get ip address
 		MySQL.getIP(ipCallback);
+
+		// display version
 		version.setText(Constants.VERSION);
 
-		String status = "Pass (Test, no actually work done)";
-		String message = "This is a generic message";
-
-		header.setText(status);
-
-		Date date = new Date();
-		String text = date + ": Status is " + status
-				+ ". MySQL (read, write) is (" + read + ", " + write
-				+ "). Message is '" + message + "'";
-		results.setText(text);
-		// pathInformation.setText("Information appended to '" + file + "'");
-
+		// run the stats
 		saveStats();
 	}
 
+	// IP Address
 	private AsyncCallback<String> ipCallback = new AsyncCallback<String>() {
 
 		@Override
@@ -103,16 +98,25 @@ public class MainPanel extends ResourceWidget {
 
 	private void saveStats() {
 		Results results = null;
+
+		// read
 		for (int i = 0; i < read; i++) {
 			results = new Results(i, System.currentTimeMillis(), Constants.READ);
 			readResults[readCount] = results;
 			MySQL.read(results, readCallback);
 			readCount++;
 		}
-		// TODO: add in
-		/*
-		 * for (int i = 0; i < write; i++) { MySQL.write(writeCallback); }
-		 */
+
+		// write
+		for (int i = 0; i < write; i++) {
+			results = new Results(i, System.currentTimeMillis(),
+					Constants.WRITE);
+			writeResults[writeCount] = results;
+			MySQL.write(results, writeCallback);
+			writeCount++;
+		}
+
+		// update
 		for (int i = 0; i < update; i++) {
 			results = new Results(i, System.currentTimeMillis(),
 					Constants.UPDATE);
@@ -128,11 +132,11 @@ public class MainPanel extends ResourceWidget {
 				return false;
 		}
 		for (Results r : writeResults) {
-			if (r == null)
+			if (r == null || !r.isComplete())
 				return false;
 		}
 		for (Results r : updateResults) {
-			if (r == null)
+			if (r == null || !r.isComplete())
 				return false;
 		}
 		return true;
@@ -193,6 +197,8 @@ public class MainPanel extends ResourceWidget {
 		if (isLogReady()) {
 			List<Results> allResults = new ArrayList<Results>();
 			addAll(allResults, readResults);
+			addAll(allResults, writeResults);
+			addAll(allResults, updateResults);
 
 			Date d = new Date();
 			MySQL.saveResults(filename, d.toString(), allResults, saveCallback);
@@ -204,18 +210,15 @@ public class MainPanel extends ResourceWidget {
 			allResults.add(r);
 	}
 
+	// callback from saving file on server
 	private AsyncCallback<Void> saveCallback = new AsyncCallback<Void>() {
 
 		@Override
 		public void onSuccess(Void result) {
-			// TODO Auto-generated method stub
-
 		}
 
 		@Override
 		public void onFailure(Throwable caught) {
-			// TODO Auto-generated method stub
-
 		}
 	};
 
@@ -227,15 +230,14 @@ public class MainPanel extends ResourceWidget {
 			updateResults[result.getIndex()] = result;
 			display();
 
-			String text = (result.getIsSuccessful()) ? "Pass (Update)"
-					: "Fail (Update)";
+			String text = (result.getIsSuccessful()) ? "Pass" : "Fail";
 			header.setText(text);
 			results.setText(result.getMessage());
 		}
 
 		@Override
 		public void onFailure(Throwable caught) {
-			header.setText("Failure (writeCallback)");
+			header.setText("Failure (updateCallback)");
 			results.setText(caught.getCause() + ":\t" + caught);
 		}
 	};
@@ -248,8 +250,7 @@ public class MainPanel extends ResourceWidget {
 			readResults[result.getIndex()] = result;
 			display();
 
-			String text = (result.getIsSuccessful()) ? "Pass (Read)"
-					: "Fail (Read)";
+			String text = (result.getIsSuccessful()) ? "Pass" : "Fail";
 			header.setText(text);
 			results.setText(result.getMessage());
 		}
@@ -265,14 +266,19 @@ public class MainPanel extends ResourceWidget {
 
 		@Override
 		public void onSuccess(Results result) {
-			// TODO Auto-generated method stub
+			result.setStopTime(System.currentTimeMillis());
+			writeResults[result.getIndex()] = result;
+			display();
 
+			String text = (result.getIsSuccessful()) ? "Pass" : "Fail";
+			header.setText(text);
+			results.setText(result.getMessage());
 		}
 
 		@Override
 		public void onFailure(Throwable caught) {
-			// TODO Auto-generated method stub
-
+			header.setText("Failure (writeCallback)");
+			results.setText(caught.getCause() + ":\t" + caught);
 		}
 
 	};

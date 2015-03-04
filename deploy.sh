@@ -13,6 +13,14 @@ echo "Move project to webapp folder"
 cd ../../../
 mv frontend/WebApplication/war/CS183WebApplication.war vagrant/webapp/
 
+echo "Add important jars"
+cp frontend/WebApplication/tomcat-j* vagrant/lib
+cp frontend/WebApplication/war/WEB-INF/lib/mysql-connector-java-5.0.8-bin.jar vagrant/lib/
+
+# echo "Provision web apps"
+# cd vagrant/
+# vagrant reload webapp1 webapp2 --provision
+
 # echo "Unzip project"
 # cd vagrant/webapp/
 # unzip CS183WebApplication.zip

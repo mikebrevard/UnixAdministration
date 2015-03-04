@@ -13,7 +13,7 @@ import com.webapp.shared.Results;
 public interface MySQLService extends RemoteService {
 	Results read(Results results);
 
-	Results write();
+	Results write(Results results);
 
 	Results update(Results results);
 
