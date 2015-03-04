@@ -13,8 +13,8 @@ NUMCOLSMAX=24
 # Will be multilied by 100 later on
 # normally set to 500-5 000
 # for debug set to 1 - 10
-TABLESIZEMIN=10
-TABLESIZEMAX=20
+TABLESIZEMIN=50000
+TABLESIZEMAX=60000
 
 #randomized sentence min and max for lorem sentences
 SENTCOUNTMIN=1
@@ -73,10 +73,12 @@ def generateData( fileName, tid ):
     numCols = randint(NUMCOLSMIN, NUMCOLSMAX)
     tableSize = randint(TABLESIZEMIN, TABLESIZEMAX)
     tableSize = tableSize * 100
-    f = open(fileName, 'w')
+    subFileCount = 0
+
     with lockDisplay:
-        print ( str(tid) + ': ###############################################\n'+str(tid) + ': File name: ', fileName+'\n'+str(tid) + ': Generating ', numCols, ' rows of data.'+'\n'+str(tid) + ': tableSize  ', tableSize, '.'+'\n'+str(tid) + ': ###############################################')
+        print ( str(tid) + ': ###############################################\n'+str(tid) + ': File name: ', fileName+'\n'+str(tid) + ': Generating ', numCols, ' columns of data.'+'\n'+str(tid) + ': tableSize  ', tableSize, '.'+'\n'+str(tid) + ': ###############################################')
         print
+        sys.stdout.flush()
 
     # Creating array of enums for columnTypes
     columnTypes=[0]*numCols;
@@ -87,10 +89,17 @@ def generateData( fileName, tid ):
         schemastr = schemastr + colOpt[columnTypes[entryIndex]].__name__ + '\t'
     schemaList[tid] = schemastr
 
+    f = open(fileName + '_' + str(subFileCount) + '.csv', 'w')
     #generate $tableSize rows of data
     for num in range(0,tableSize):
-        if num % (tableSize/10) == 0:
-            print (str(tid) + ": " + str((num/(tableSize/10)) * 10) + '%')
+        if num % (tableSize/30) == 0:
+            # create another file
+            f.close()
+            f = open(fileName + '_' + str(subFileCount) + '.csv', 'w')
+            subFileCount = subFileCount + 1
+
+            print (str(tid) + ": " + str(((num/(tableSize/30))*100 / 30 ) ) + '%')
+            sys.stdout.flush()
         rowData=""
         # generate the row data
         for i in range(0, numCols):
@@ -98,7 +107,7 @@ def generateData( fileName, tid ):
         rowData = rowData + '\n'
         f.write(rowData)
 
-    print(str(tid) + ': 100% == [DONE ' + str(tid) + ']')
+    print(str(tid) + ': 100% == [DONE   ' + str(tid) + ']')
     f.close()
 
 def addSqlCreate( num, schemaStr ):
@@ -119,7 +128,7 @@ def main(argv):
     ####################################################### GENERATE DATA
     numFiles=int(numFiles)
     for num in range(0,numFiles):
-        file="data"+str(num)+".csv"
+        file="data"+str(num)
         t=threading.Thread(target=generateData, args=(file, num))
         threads.append(t)
         schemaList.append('')
