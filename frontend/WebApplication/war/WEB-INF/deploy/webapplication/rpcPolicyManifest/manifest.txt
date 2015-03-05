@@ -1,0 +1,3 @@
+# Module webapplication
+# RPC service class, partial path of RPC policy file
+com.webapp.client.services.MySQLService, 22CD3636B87370CCE48986F3C983F0D9.gwt.rpc

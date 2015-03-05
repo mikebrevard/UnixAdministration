@@ -1,0 +1,2 @@
+serviceClass: com.webapp.client.services.MySQLService
+path: 22CD3636B87370CCE48986F3C983F0D9.gwt.rpc

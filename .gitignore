@@ -13,10 +13,10 @@ frontend/WebApplication/gwt-unitCache/
 frontend/WebApplication/logs
 frontend/WebApplication/test-classes
 
-frontend/WebApplication/war/CS183WebApplication.war
-frontend/WebApplication/war/WEB-INF/deploy/*
-frontend/WebApplication/war/WEB-INF/classes/*
-frontend/WebApplication/war/TestFiles
+
+
+
+
 vagrant/etc/sql/genData/*
 
 RemoteSystemsTempFiles/

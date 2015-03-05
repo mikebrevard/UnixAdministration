@@ -99,6 +99,8 @@ public class MainPanel extends ResourceWidget {
 	private void saveStats() {
 		Results results = null;
 
+		// TODO: sequential
+		
 		// read
 		for (int i = 0; i < read; i++) {
 			results = new Results(i, System.currentTimeMillis(), Constants.READ);
