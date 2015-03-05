@@ -1,48 +1,54 @@
 #!/bin/bash
 
-# update !!!!!
-# yum -y update
-echo "=================================================================="
-echo "installing gcc and other basic stuff. (may take a moment)"
-if yum list installed kernel-devel; then
-  echo "skipping these installs"
+# Install httpd
+if yum list installed httpd > /dev/null 2>&1; then
+  echo "httpd already installed"
 else
-  yum install -y gcc* kernel-devel epel-release > /dev/null
+  echo "installing httpd"
+  sudo yum -y install httpd > /dev/null 2>&1
+  echo "httpd installed"
 fi
 
-# installing   apache
-echo "=================================================================="
-echo "installing httpd"
-if yum list installed httpd; then
-  echo "skipping these installs"
+echo "configuring httpd"
+hostname=`hostname -s`
+sudo sed -i "/#ServerName www.example.com:80/a ServerName $hostname:80" /etc/httpd/conf/httpd.conf
+sudo sed -i 's/FollowSymLinks//g' /etc/httpd/conf/httpd.conf
+echo "httpd configured"
+
+echo "starting httpd"
+sudo service httpd start > /dev/null 2>&1
+if [ $? -eq 0 ]; then
+  echo "httpd service started without error"
+  sudo service httpd stop > /dev/null 2>&1
 else
-  yum -y install httpd > /dev/null
+  echo "httpd failed to start"
+  exit 5;
 fi
-# apache services -- [ON]
-service httpd restart
-chkconfig httpd on
-echo "Apache httpd"
+
+chkconfig httpd on > /dev/null 2>&1
 chkconfig --list httpd
 
 #installing haproxy
-echo "=================================================================="
-sudo yum -y install haproxy
+if yum list installed haproxy > /dev/null 2>&1; then
+  echo "haproxy already installed"
+else
+  echo "installing haproxy"
+  sudo yum -y install haproxy > /dev/null 2>&1
+  echo "haproxy installed"
+fi
 
 echo "configuring haproxy configuration"
 sudo cp /vagrant/etc/haproxy/haproxy.cfg /etc/haproxy/haproxy.cfg
 sudo cp /vagrant/etc/rsyslog.conf /etc/rsyslog.conf
 sudo cp /vagrant/etc/rsyslog.d/haproxy.conf /etc/rsyslog.d/haproxy.conf
 
-
-# haproxy services -- [ON]
 echo "starting haproxy"
 service haproxy restart
 chkconfig haproxy on
+chkconfig haproxy list
 
-
-echo "deleting all the time"
-sudo rm -f /etc/localtime
 echo "linking real time"
+sudo rm -f /etc/localtime
 sudo ln -s /usr/share/zoneinfo/America/Los_Angeles /etc/localtime
 echo "Today is:"
 date

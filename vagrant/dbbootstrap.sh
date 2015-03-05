@@ -1,55 +1,38 @@
 #!/bin/bash
 
-# update !!!!!
-# yum -y update
-echo "=================================================================="
-echo "installing gcc and other basic stuff. (may take a moment)"
-if yum list installed kernel-devel; then
-  echo "skipping these installs"
+# instal mysql
+echo "installing mysql-server"
+if yum list installed mysql-server > /dev/null 2&>1; then
+  echo "mysql-server already installed"
 else
-  yum install -y gcc* kernel-devel epel-release > /dev/null
+  sudo yum -y install mysql-server > /dev/null 2&>1;
+  /etc/init.d/mysqld restart > /dev/null 2&>1
+  chkconfig mysqld on
+  chkconfig --list mysqld
 fi
 
-# installing    mysql
-echo "installing mysql-server"
-yum -y install mysql-server > /dev/null
-
-# mysql services -- [ON]
-/etc/init.d/mysqld restart
-chkconfig mysqld on
-chkconfig --list mysqld
-
 # set up sql user account
-echo "Creating user..."
+echo "creating user..."
 if [ ! -f /var/._dbinit183 ]; then
   sudo mysql --user=root mysql < /vagrant/etc/sql/createUser.sql
   echo "User 'unixadmin' has been created with password 'unixadmin'"
   sudo touch /var/._dbinit183
 else
-  echo "Database has been previously initialized."
-  echo "Skipping configuration"
+  echo "mysql user 'unixadmin' already created with password 'unixadmin'"
 fi
 
 # set up database and tables
-echo "Init database and table. . ."
+echo "initialize database and tables"
 if [ ! -f /var/._dbpop183 ]; then
   sudo mysql < /vagrant/etc/sql/basicTableInit.sql
-  echo "Init completed."
-  echo "Populating database"
   sudo mysql < /vagrant/etc/sql/basicTablePopulate.sql
-  echo "Populate completed."
-
   sudo touch /var/._dbpop183
 else
-  echo "Database has been previously populated"
-  echo "skipping populating database"
+  echo "database already populated"
 fi
 
-
-
-echo "deleting all the time"
-sudo rm -f /etc/localtime
 echo "linking real time"
+sudo rm -f /etc/localtime
 sudo ln -s /usr/share/zoneinfo/America/Los_Angeles /etc/localtime
 echo "Today is:"
 date
