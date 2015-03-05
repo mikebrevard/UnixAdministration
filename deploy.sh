@@ -10,7 +10,6 @@ rm -rf vagrant/webapp/*
 # ./build_war.sh
 
 echo "Move project to webapp folder"
-cd ../../../
 cp frontend/WebApplication/war/CS183WebApplication.war vagrant/webapp/
 
 echo "Add important jars"
