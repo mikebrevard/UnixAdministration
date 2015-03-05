@@ -128,14 +128,14 @@ public class MySQLServiceImpl extends RemoteServiceServlet implements
 			else if (r.getTestType().equals(Constants.UPDATE))
 				numUpdates++;
 			if (!r.getIsSuccessful()) {
-				status = "Fail";
+				status = "Fail;";
 				if (r.getMessage() != null)
-					status += "; Message=" + r.getMessage();
+					status += "Message=" + r.getMessage();
 			}
 		}
 
 		if (status.isEmpty())
-			status = "Pass";
+			status = "Pass;";
 
 		String data = "IP= " + getIP() +"; Date=" + date + "; Duration=" + totalTime
 				+ "ms; Number of Reads=" + numReads + "; Number of Writes="
