@@ -63,6 +63,7 @@ yes | sudo yum install glibc.i686 > /dev/null 2>&1
 
 echo "installing libs and deploying webapp"
 sudo cp /vagrant/lib/* /usr/local/tomcat7/lib/ > /dev/null 2>&1
+sudo rm -rf /usr/local/tomcat7/webapps/CS183WebApplication > /dev/null 2>&1
 sudo cp /vagrant/webapp/CS183WebApplication.war /usr/local/tomcat7/webapps/
 
 echo "restarting tomcat"
