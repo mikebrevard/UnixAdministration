@@ -5,9 +5,9 @@ echo "Deploy Web Application"
 echo "Clear webapp folder"
 rm -rf vagrant/webapp/*
 
-echo "Build war"
-cd frontend/WebApplication/war
-./build_war.sh
+# echo "Build war"
+# cd frontend/WebApplication/war
+# ./build_war.sh
 
 echo "Move project to webapp folder"
 cd ../../../
