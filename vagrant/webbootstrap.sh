@@ -1,109 +1,76 @@
 #!/bin/bash
 
-# update !!!!!
-# yum -y update
-echo "=================================================================="
-echo "installing gcc and other basic stuff. (may take a moment)"
-if yum list installed kernel-devel; then
-  echo "skipping these installs"
+# Install httpd
+if yum list installed httpd > /dev/null 2>&1; then
+  echo "httpd already installed"
 else
-  yum install -y gcc* kernel-devel epel-release > /dev/null
+  echo "installing httpd"
+  sudo yum -y install httpd > /dev/null 2>&1
+  echo "httpd installed"
 fi
 
-# installing   apache
-echo "installing httpd"
-yum -y install httpd > /dev/null
+echo "configuring httpd"
+hostname=`hostname -s`
+sudo sed -i "/#ServerName www.example.com:80/a ServerName $hostname:80" /etc/httpd/conf/httpd.conf
+sudo sed -i 's/FollowSymLinks//g' /etc/httpd/conf/httpd.conf
+echo "httpd configured"
 
-# apache services -- [ON]
-#rm -rf /var/www/html                      # change webroot to vagrant folder
-#ln -fs /vagrant /var/www/html             # ^
-# TODO add a way to edit the line?
-service httpd restart
-chkconfig httpd on
+echo "starting httpd"
+sudo service httpd start > /dev/null 2>&1
+if [ $? -eq 0 ]; then
+  echo "httpd service started without error"
+  sudo service httpd stop > /dev/null 2>&1
+else
+  echo "httpd failed to start"
+  exit 5;
+fi
 
-# log apache service
-echo "Apache httpd"
+chkconfig httpd on > /dev/null 2>&1
 chkconfig --list httpd
 
-#if [ -d $WEBAPP ]; then
-#  cp -r /vagrant/webapp/ /var/www/html/
-#  echo "$WEBAPP successfully deployed" | tee $VAGRANTLOG
-#else
-#  echo "$WEBAPP not found" >> $VAGRANTLOG
-#  >&2 echo "$WEBAPP not found"
-#fi
-
-
 # Install java
-echo "=================================================================="
-
-echo "installing java......................"
-echo "wget java install"
+echo "installing java"
 if [ ! -d /usr/java/jdk1.7.0_75 ]; then
-  cd /tmp/
-  wget --no-cookies --no-check-certificate --header "Cookie: gpw_e24=http%3A%2F%2Fwww.oracle.com%2F; oraclelicense=accept-securebackup-cookie" "http://download.oracle.com/otn-pub/java/jdk/7u75-b13/jdk-7u75-linux-i586.tar.gz" >/dev/null 2>&1
-  tar -xvf jdk-7u75-linux-i586.tar.gz > /dev/null
+  sudo wget --no-cookies --no-check-certificate --header "Cookie: gpw_e24=http%3A%2F%2Fwww.oracle.com%2F; oraclelicense=accept-securebackup-cookie" "http://download.oracle.com/otn-pub/java/jdk/7u75-b13/jdk-7u75-linux-i586.tar.gz" >/dev/null 2>&1
+  sudo tar -xvf jdk-7u75-linux-i586.tar.gz > /dev/null 2>&1
   sudo mkdir /usr/java/
   sudo mv jdk1.7.0_75 /usr/java/
+  sudo rm -f jdk-7u75-linux-i586.tar.gz
+  echo "java installed"
 else
-  echo "JAVA ALREADY INSTALLED"
+  echo "java already installed"
 fi
-# sudo echo "export JAVA_HOME=/usr/java/jdk1.7.0_75/" > /usr/local/tomcat7/bin/setenv.sh
-# sudo chmod +x /usr/local/tomcat7/bin/setenv.sh
+
 echo "configuring java..."
-
 cp /vagrant/etc/scripts/.bash_profile /home/vagrant/.bash_profile
-source /home/vagrant/.bash_profile
-echo "JAVA_HOME: $JAVA_HOME"
-echo "PATH: $PATH"
-echo "configuring done."
+source /home/vagrant/.bash_profile > /dev/null 2>&1
+echo "finished configuring java."
+
 # Install tomcat7
-echo "=================================================================="
-echo "installing tomcat7......................"
+echo "installing tomcat"
 if [ ! -d /usr/local/tomcat7 ]; then
-  cd /tmp/
-  echo "wget tomcat install"
-  wget http://supergsego.com/apache/tomcat/tomcat-7/v7.0.59/bin/apache-tomcat-7.0.59.tar.gz >/dev/null 2>&1
-  tar -xvf apache-tomcat-7.0.59.tar.gz > /dev/null
+  sudo wget http://supergsego.com/apache/tomcat/tomcat-7/v7.0.59/bin/apache-tomcat-7.0.59.tar.gz >/dev/null 2>&1
+  sudo tar -xvf apache-tomcat-7.0.59.tar.gz > /dev/null 2>&1
   sudo mkdir /usr/local/tomcat7
-  sudo mv /tmp/apache-tomcat-7.0.59/* /usr/local/tomcat7/
-  echo "installing libs"
-  sudo mv /vagrant/lib/* /usr/local/tomcat7/lib/
+  sudo mv apache-tomcat-7.0.59/* /usr/local/tomcat7/
+  sudo rm -f apache-tomcat-7.0.59.tar.gz
 else
-    echo "TOMCAT ALREADY INSTALLED"
+    echo "tomcat already installed"
 fi
 
-# IDK
-echo "=================================================================="
-echo "installing glibc for good reasons........."
-yes | sudo yum install glibc.i686 > /dev/null
+echo "configuring tomcat"
+yes | sudo yum install glibc.i686 > /dev/null 2>&1
 
-# Start tomcat
-echo "=================================================================="
+echo "installing libs and deploying webapp"
+sudo cp /vagrant/lib/* /usr/local/tomcat7/lib/ > /dev/null 2>&1
+sudo cp /vagrant/webapp/CS183WebApplication.war /usr/local/tomcat7/webapps/
 
-#move webapp
-if [ -f "/vagrant/webapp/CS183WebApplication.war" ]; then
-  # first remove the webapp if it's there
-  if [ -d "/usr/local/tomcat7/webapps/CS183WebApplication/" ]; then
-    echo "removing cs183webaapp dir"
-    sudo rm -rf /usr/local/tomcat7/webapps/CS183WebApplication/
-  fi
-  # remove the old war file
-  echo "removing old war"
-  sudo rm -f /usr/local/tomcat7/webapps/CS183WebApplication.war
+echo "restarting tomcat"
+sudo -E /usr/local/tomcat7/bin/shutdown.sh > /dev/null 2>&1
+sudo -E /usr/local/tomcat7/bin/startup.sh > /dev/null 2>&1
 
-  #copy the new war to the webapps directory
-  echo "copying new war"
-  sudo cp /vagrant/webapp/CS183WebApplication.war /usr/local/tomcat7/webapps/
-fi
-
-sudo -E /usr/local/tomcat7/bin/shutdown.sh
-sudo -E /usr/local/tomcat7/bin/startup.sh
-
-
-echo "deleting all the time"
-sudo rm -f /etc/localtime
-echo "linking real time"
-sudo ln -s /usr/share/zoneinfo/America/Los_Angeles /etc/localtime
+echo "setting local time"
+rm -f /etc/localtime
+sudo ln -s /usr/share/zoneinfo/America/Los_Angeles /etc/localtime > /dev/null 2>&1
 echo "Today is:"
 date
