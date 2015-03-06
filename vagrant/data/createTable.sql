@@ -1,3 +1,5 @@
+use UnixTestDB;
+
 DROP TABLE IF EXISTS Table1;
 
 CREATE TABLE Table1 (

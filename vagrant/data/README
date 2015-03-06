@@ -24,5 +24,4 @@ Steps: Check make sure it works
 4. type "SELECT COUNT(*) FROM Table1;" This shows you have many rows are in Table1.
 
 Final Note:
-If you want to add more data (extend the data from ~2.7 million to ~5.4 million) just run "./importDataMySQL.sh" twice. Now we can simulate 10 million rows easily! Good job Martin creating the data
-
+If you want to add more data (extend the data from ~2.5 million to ~3 million) just run "./importDataMySQL.sh" twice. Now we can simulate 10 million rows easily! Good job Martin creating the data
