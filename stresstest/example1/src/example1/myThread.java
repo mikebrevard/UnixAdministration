@@ -7,17 +7,20 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 
 public class myThread extends Thread {
 	
-	public String MAXUSERS, FILENAME;
-	public int TID;
+	public String REQUESTS, FILENAME;
+	public int TID, R , W, U;
 	
-	public myThread(String max_U, String filename, int threadID){
-		MAXUSERS = max_U;
+	public myThread(String request, String filename,int read, int write, int update, int threadID){
+		REQUESTS = request;
 		FILENAME = filename;
 		TID = threadID;
+		R = read;
+		W = write;
+		U = update;
 	}
 	
 	public  void runTest(){
-		int users = 0, max_users = Integer.parseInt(MAXUSERS), read = 14, write = 2, update = 20;
+		int request = 0, max_requests = Integer.parseInt(REQUESTS), read = R, write = W, update = U;
 		String file = FILENAME;
 		String url = "http://127.0.0.1:8087/CS183WebApplication/?read=" + read + "&write=" + write +
     			"&update=" + update + "&file=" + file;
@@ -25,7 +28,7 @@ public class myThread extends Thread {
 		System.out.println("Thread ID: " + TID + " " + url);
 		
 		//Loops for 5 users
-		while(users < max_users){
+		while(request < max_requests){
 			//TODO: Add threads to create concurrent users
 			
 	        // Create a new instance of the firefox unit driver
@@ -44,7 +47,7 @@ public class myThread extends Thread {
 	        //Exit session
 	        driver.quit();
 	        
-        	users++;
+	        request++;
 		}
 	}
 	
