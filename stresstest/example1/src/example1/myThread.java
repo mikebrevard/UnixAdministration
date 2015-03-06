@@ -5,13 +5,24 @@ import java.util.concurrent.TimeUnit;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
-public class rcdemo {
+public class myThread extends Thread {
+	
+	public String MAXUSERS, FILENAME;
+	public int TID;
+	
+	public myThread(String max_U, String filename, int threadID){
+		MAXUSERS = max_U;
+		FILENAME = filename;
+		TID = threadID;
+	}
+	
+	public  void runTest(){
+		int users = 0, max_users = Integer.parseInt(MAXUSERS), read = 14, write = 2, update = 20;
+		String file = FILENAME;
+		String url = "http://127.0.0.1:8087/CS183WebApplication/?read=" + read + "&write=" + write +
+    			"&update=" + update + "&file=" + file;
 
-	public static void main(String[] args) {
-
-		
-		int users = 0, max_users = 5, read = 14, write = 2, update = 20;
-		String file = "myfile";
+		System.out.println("Thread ID: " + TID + " " + url);
 		
 		//Loops for 5 users
 		while(users < max_users){
@@ -24,8 +35,7 @@ public class rcdemo {
 	        driver.manage().timeouts().implicitlyWait(30,TimeUnit.SECONDS);
 	        
 	        // And now use this to visit our page
-	        driver.get("http://127.0.0.1:8087/CS183WebApplication/?read=" + read + "&write=" + write +
-	        			"&update=" + update + "&file=" + file);
+	        driver.get(url);
 	   
 	        //Timer to wait till data is written and finally written to file
 	        long end = System.currentTimeMillis() + 5000;
@@ -37,5 +47,9 @@ public class rcdemo {
         	users++;
 		}
 	}
-
+	
+	
+	public void run(){
+		runTest();
+	}
 }
