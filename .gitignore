@@ -34,3 +34,17 @@ vagrant/.vagrant/
 .Trashes
 ehthumbs.db
 Thumbs.db
+
+*.fdx
+
+*.fnm
+
+*.frq
+
+*.nrm
+
+*.prx
+
+*.tii
+
+*.tis
