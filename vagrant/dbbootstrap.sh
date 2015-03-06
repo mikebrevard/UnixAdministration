@@ -1,5 +1,16 @@
 #!/bin/bash
 
+# update !!!!!
+# yum -y update
+echo "=================================================================="
+# installing    mysql
+echo "installing mysql-server"
+yum -y install mysql-server > /dev/null
+
+# mysql services -- [ON]
+/etc/init.d/mysqld restart
+chkconfig mysqld on
+chkconfig --list mysqld
 # instal mysql
 echo "installing mysql-server"
 if yum list installed mysql-server > /dev/null 2&>1; then
@@ -24,13 +35,17 @@ fi
 # set up database and tables
 echo "initialize database and tables"
 if [ ! -f /var/._dbpop183 ]; then
-  sudo mysql < /vagrant/etc/sql/basicTableInit.sql
-  sudo mysql < /vagrant/etc/sql/basicTablePopulate.sql
+  sudo mysql < /vagrant/etc/data/createTable.sql
+  sudo chmod 700 /vagrant/etc/data/importDataMySQL.sh
+  /vagrant/etc/data/importDataMySql.sh
+  echo "Populate completed."
   sudo touch /var/._dbpop183
 else
   echo "database already populated"
 fi
 
+echo "deleting all the time"
+sudo rm -f /etc/localtime
 echo "linking real time"
 sudo rm -f /etc/localtime
 sudo ln -s /usr/share/zoneinfo/America/Los_Angeles /etc/localtime
