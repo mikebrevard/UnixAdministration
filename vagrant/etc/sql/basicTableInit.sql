@@ -1,5 +1,4 @@
-CREATE DATABASE UnixTestDB;
-use UnixTestDB;
+
 
 CREATE TABLE `basicTable` (
   `id` mediumint(8) unsigned NOT NULL auto_increment,

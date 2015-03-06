@@ -3,14 +3,6 @@
 # update !!!!!
 # yum -y update
 echo "=================================================================="
-# installing    mysql
-echo "installing mysql-server"
-yum -y install mysql-server > /dev/null
-
-# mysql services -- [ON]
-/etc/init.d/mysqld restart
-chkconfig mysqld on
-chkconfig --list mysqld
 # instal mysql
 echo "installing mysql-server"
 if yum list installed mysql-server > /dev/null 2&>1; then
