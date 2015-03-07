@@ -24,7 +24,7 @@ import com.webapp.shared.Results;
 @SuppressWarnings("serial")
 public class MySQLServiceImpl extends RemoteServiceServlet implements
 		MySQLService {
-	private final static String TABLE = "basicTable";
+	private final static String TABLE = "Table1";
 	private static DataSource datasource = null;
 
 	@Override
@@ -137,10 +137,10 @@ public class MySQLServiceImpl extends RemoteServiceServlet implements
 		if (status.isEmpty())
 			status = "Pass;";
 
-		String data = "IP= " + getIP() +"; Date=" + date + "; Duration=" + totalTime
-				+ "ms; Number of Reads=" + numReads + "; Number of Writes="
-				+ numWrites + "; Number of Updates=" + numUpdates + "; Status="
-				+ status;
+		String data = "IP= " + getIP() + "; Date=" + date + "; Duration="
+				+ totalTime + "ms; Number of Reads=" + numReads
+				+ "; Number of Writes=" + numWrites + "; Number of Updates="
+				+ numUpdates + "; Status=" + status;
 
 		if (filename == null || filename.isEmpty())
 			filename = "unnamedtest";

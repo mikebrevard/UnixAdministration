@@ -99,33 +99,59 @@ public class MainPanel extends ResourceWidget {
 	private void saveStats() {
 		Results results = null;
 
-		// TODO: sequential
-		
-		// read
-		for (int i = 0; i < read; i++) {
-			results = new Results(i, System.currentTimeMillis(), Constants.READ);
-			readResults[readCount] = results;
-			MySQL.read(results, readCallback);
-			readCount++;
+		Integer iterate = 0;
+		iterate = Math.max(read, write);
+		iterate = Math.max(iterate, update);
+
+		for (int i = 0; i < iterate; i++) {
+			if (i < read) {
+				results = new Results(i, System.currentTimeMillis(),
+						Constants.READ);
+				readResults[readCount] = results;
+				MySQL.read(results, readCallback);
+				readCount++;
+			}
+			if (i < write) {
+				results = new Results(i, System.currentTimeMillis(),
+						Constants.WRITE);
+				writeResults[writeCount] = results;
+				MySQL.write(results, writeCallback);
+				writeCount++;
+			}
+			if (i < update) {
+				results = new Results(i, System.currentTimeMillis(),
+						Constants.UPDATE);
+				updateResults[updateCount] = results;
+				MySQL.update(results, updateCallback);
+				updateCount++;
+			}
 		}
+
+		// read
+		// for (int i = 0; i < read; i++) {
+		// results = new Results(i, System.currentTimeMillis(), Constants.READ);
+		// readResults[readCount] = results;
+		// MySQL.read(results, readCallback);
+		// readCount++;
+		// }
 
 		// write
-		for (int i = 0; i < write; i++) {
-			results = new Results(i, System.currentTimeMillis(),
-					Constants.WRITE);
-			writeResults[writeCount] = results;
-			MySQL.write(results, writeCallback);
-			writeCount++;
-		}
+		// for (int i = 0; i < write; i++) {
+		// results = new Results(i, System.currentTimeMillis(),
+		// Constants.WRITE);
+		// writeResults[writeCount] = results;
+		// MySQL.write(results, writeCallback);
+		// writeCount++;
+		// }
 
 		// update
-		for (int i = 0; i < update; i++) {
-			results = new Results(i, System.currentTimeMillis(),
-					Constants.UPDATE);
-			updateResults[updateCount] = results;
-			MySQL.update(results, updateCallback);
-			updateCount++;
-		}
+		// for (int i = 0; i < update; i++) {
+		// results = new Results(i, System.currentTimeMillis(),
+		// Constants.UPDATE);
+		// updateResults[updateCount] = results;
+		// MySQL.update(results, updateCallback);
+		// updateCount++;
+		// }
 	}
 
 	private Boolean isLogReady() {

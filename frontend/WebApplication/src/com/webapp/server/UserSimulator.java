@@ -4,7 +4,7 @@ import java.util.Random;
 
 public class UserSimulator {
 
-	private static Integer DATABASE_SIZE = 100;
+	private static Integer DATABASE_SIZE = 2500000;
 
 	public static Integer getRowNumber() {
 		Random rand = new Random();
@@ -12,12 +12,12 @@ public class UserSimulator {
 	}
 
 	public static String randomWrite() {
-		String text = "(Name, Email, Company) VALUES ('random name (wr)', 'random email (wr)', 'random company (wr)')";
+		String text = "(column1, column2, column3, column4, column5, column6) VALUES ('random (wr)', 'random (wr)', 'random (wr)','random (wr)', 'random (wr)', 'random (wr)')";
 		return text;
 	}
 
 	public static String randomUpdate() {
-		String text = "Name='random name (up)', Email='random email (up)', Company='random company (up)'";
+		String text = "column1='random (up)', column2='random (up)', column3='random (up)', column4='random (up)', column5='random (up)', column6='random (up)'";
 		return text;
 	}
 }
