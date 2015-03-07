@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# update !!!!!
-# yum -y update
-echo "=================================================================="
 # instal mysql
 echo "installing mysql-server"
 if yum list installed mysql-server > /dev/null 2&>1; then
@@ -17,7 +14,7 @@ fi
 # set up sql user account
 echo "creating user..."
 if [ ! -f /var/._dbinit183 ]; then
-  sudo mysql --user=root mysql < /vagrant/etc/sql/createUser.sql
+  sudo mysql --user=root mysql < /vagrant/etc/oldSQL/createUser.sql
   echo "User 'unixadmin' has been created with password 'unixadmin'"
   sudo touch /var/._dbinit183
 else

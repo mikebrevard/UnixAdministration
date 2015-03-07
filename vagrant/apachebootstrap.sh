@@ -43,9 +43,9 @@ sudo cp /vagrant/etc/rsyslog.conf /etc/rsyslog.conf
 sudo cp /vagrant/etc/rsyslog.d/haproxy.conf /etc/rsyslog.d/haproxy.conf
 
 echo "starting haproxy"
-service haproxy restart
+service haproxy start
 chkconfig haproxy on
-chkconfig haproxy list
+chkconfig --list haproxy
 
 echo "linking real time"
 sudo rm -f /etc/localtime
