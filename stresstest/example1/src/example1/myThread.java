@@ -9,14 +9,16 @@ public class myThread extends Thread {
 	
 	public String REQUESTS, FILENAME;
 	public int TID, R , W, U;
+	public long SECONDS;
 	
-	public myThread(String request, String filename,int read, int write, int update, int threadID){
+	public myThread(String request, String filename,int read, int write, int update, int threadID, long seconds){
 		REQUESTS = request;
 		FILENAME = filename;
 		TID = threadID;
 		R = read;
 		W = write;
 		U = update;
+		SECONDS = seconds;
 	}
 	
 	public  void runTest(){
@@ -41,7 +43,7 @@ public class myThread extends Thread {
 	        driver.get(url);
 	   
 	        //Timer to wait till data is written and finally written to file
-	        long end = System.currentTimeMillis() + 5000;
+	        long end = System.currentTimeMillis() + SECONDS;
 	        while (System.currentTimeMillis() < end) {}
 	        
 	        //Exit session

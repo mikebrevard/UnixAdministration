@@ -3,12 +3,13 @@ package example1;
 public class rcdemo {
 	
 	/*
-	 * ARG0 = number of requests each thread submits
-	 * ARG1 = number of threads
+	 * ARG0 = # of requests each thread submits
+	 * ARG1 = # of threads
 	 * ARG2 = # reads
 	 * ARG3 = # writes
 	 * ARG4 = # updates
 	 * ARG5 = file name
+	 * ARG6 = time (seconds) firefox waits till it closes browser
 	 */
 	
 	public static void main(String[] args) {
@@ -23,7 +24,7 @@ public class rcdemo {
 		while(counter < num_threads){
 			//requests, filename, read, write, update, thread id
 			myThread mytd = new myThread(args[0], args[5],Integer.parseInt(args[2]),
-					Integer.parseInt(args[3]), Integer.parseInt(args[4]), counter);
+					Integer.parseInt(args[3]), Integer.parseInt(args[4]), counter, Long.parseLong(args[6]));
 			mytd_array[counter] = mytd;
 			counter++;
 		}
