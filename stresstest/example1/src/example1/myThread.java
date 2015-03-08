@@ -26,8 +26,6 @@ public class myThread extends Thread {
 		String file = FILENAME;
 		String url = "http://127.0.0.1:8087/CS183WebApplication/?read=" + read + "&write=" + write +
     			"&update=" + update + "&file=" + file;
-
-		System.out.println("Thread ID: " + TID + " " + url);
 		
 		//Loops for 5 users
 		while(request < max_requests){
@@ -51,6 +49,9 @@ public class myThread extends Thread {
 	        
 	        request++;
 		}
+		
+		System.out.println("Thread ID: " + TID + " " + url +" FINISHED");
+
 	}
 	
 	

@@ -37,7 +37,7 @@ public class rcdemo {
 			counter++;
 		}
 
-		System.out.println("All threads have been ran!");
+		System.out.println("All threads have started!");
 	}
 
 }
