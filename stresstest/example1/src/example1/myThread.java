@@ -26,7 +26,8 @@ public class myThread extends Thread {
 		String file = FILENAME;
 		String url = "http://127.0.0.1:8087/CS183WebApplication/?read=" + read + "&write=" + write +
     			"&update=" + update + "&file=" + file;
-		
+		long start_time = System.currentTimeMillis();
+		long finish_time = 0;
 		//Loops for 5 users
 		while(request < max_requests){
 			//TODO: Add threads to create concurrent users
@@ -50,7 +51,11 @@ public class myThread extends Thread {
 	        request++;
 		}
 		
-		System.out.println("Thread ID: " + TID + " " + url +" FINISHED");
+		finish_time = System.currentTimeMillis();
+		long duration = finish_time - start_time;
+		duration = duration / 1000; //convert to seconds
+		
+		System.out.println("Thread Complete, Thread ID: " + TID + " " + url +" Duration: " + duration + " seconds");
 
 	}
 	
