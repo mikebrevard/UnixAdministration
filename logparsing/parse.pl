@@ -14,7 +14,7 @@ my %errors;
 while (my $line = <$log>)
 {
     $numtests += 1;
-    my @fields = ($line =~ /IP=(\d+\.\d+\.\d+\.\d+); Date=(.+); Duration=(\d+)ms; Number of Reads=(\d+); Number of Writes=(\d+); Number of Updates=(\d+); Status=(\w+);( Message=(.+))?/);
+    my @fields = ($line =~ /IP= (\d+\.\d+\.\d+\.\d+); Date=(.+); Duration=(\d+)ms; Number of Reads=(\d+); Number of Writes=(\d+); Number of Updates=(\d+); Status=(\w+);( Message=(.+))?/);
     
     $duration += $3;
     
