@@ -39,8 +39,6 @@ fi
 
 echo "configuring haproxy configuration"
 sudo cp /vagrant/etc/haproxy/haproxy.cfg /etc/haproxy/haproxy.cfg
-sudo cp /vagrant/etc/rsyslog.conf /etc/rsyslog.conf
-sudo cp /vagrant/etc/rsyslog.d/haproxy.conf /etc/rsyslog.d/haproxy.conf
 
 echo "starting haproxy"
 service haproxy start

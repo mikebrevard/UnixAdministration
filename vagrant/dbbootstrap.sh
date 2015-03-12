@@ -13,7 +13,7 @@ fi
 
 # set up sql user account
 echo "creating user..."
-if sudo mysql --user=root mysql < /vagrant/etc/oldSQL/createUser.sql > /dev/null 2>&1; then
+if sudo mysql --user=root mysql < /vagrant/etc/data/createUser.sql > /dev/null 2>&1; then
   echo "mysql user 'unixadmin' has been created with password 'unixadmin'"
 else
   echo "mysql user 'unixadmin' already created with password 'unixadmin'"
